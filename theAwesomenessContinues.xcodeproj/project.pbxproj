@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B5491EE61FF3B5F2003FD3CF /* Colosseum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5491EDD1FF398E9003FD3CF /* Colosseum.cpp */; };
-		B5491EE71FF3B6ED003FD3CF /* unitTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5491EE11FF3A6CD003FD3CF /* unitTest.cpp */; };
+		B5C8F5281FF5411800458B2F /* unitTestHistogram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5C8F5271FF5411800458B2F /* unitTestHistogram.cpp */; };
+		B5C8F5291FF544ED00458B2F /* Histogram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5C8F5231FF540F000458B2F /* Histogram.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -34,6 +34,9 @@
 		B5491EDD1FF398E9003FD3CF /* Colosseum.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Colosseum.cpp; sourceTree = "<group>"; };
 		B5491EDE1FF398E9003FD3CF /* Colosseum.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Colosseum.hpp; sourceTree = "<group>"; };
 		B5491EE11FF3A6CD003FD3CF /* unitTest.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = unitTest.cpp; sourceTree = "<group>"; };
+		B5C8F5231FF540F000458B2F /* Histogram.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Histogram.cpp; sourceTree = "<group>"; };
+		B5C8F5241FF540F000458B2F /* Histogram.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Histogram.hpp; sourceTree = "<group>"; };
+		B5C8F5271FF5411800458B2F /* unitTestHistogram.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = unitTestHistogram.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +74,7 @@
 				B5491ECC1FF396EE003FD3CF /* main2.cpp */,
 				B5491EE01FF398EF003FD3CF /* Colosseum */,
 				B5491EDA1FF397E5003FD3CF /* Splay Tree */,
+				B5C8F5261FF540F800458B2F /* Histogram */,
 				B5491ED91FF397CE003FD3CF /* misc */,
 			);
 			path = theAwesomenessContinues;
@@ -101,6 +105,16 @@
 				B5491EE11FF3A6CD003FD3CF /* unitTest.cpp */,
 			);
 			name = Colosseum;
+			sourceTree = "<group>";
+		};
+		B5C8F5261FF540F800458B2F /* Histogram */ = {
+			isa = PBXGroup;
+			children = (
+				B5C8F5241FF540F000458B2F /* Histogram.hpp */,
+				B5C8F5231FF540F000458B2F /* Histogram.cpp */,
+				B5C8F5271FF5411800458B2F /* unitTestHistogram.cpp */,
+			);
+			name = Histogram;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -160,8 +174,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B5491EE71FF3B6ED003FD3CF /* unitTest.cpp in Sources */,
-				B5491EE61FF3B5F2003FD3CF /* Colosseum.cpp in Sources */,
+				B5C8F5291FF544ED00458B2F /* Histogram.cpp in Sources */,
+				B5C8F5281FF5411800458B2F /* unitTestHistogram.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -16,7 +16,7 @@ Colosseum::Colosseum(int n, int * trainingGroupsIDs) {}
 /* Description:   Adds a new Training Group to the system.
  * Input:		  trainingGroupID - ID of the trainer Group to add.
  * Output:        None.
- * Return Values: ALLOCATION_ERROR - In case of an allocation error.
+ * Return Values: ALLOCATION_ERROR - In case of an allocation erx`ror.
  *                INVALID_INPUT - if trainingGroupID <0
  *                FAILURE - If trainingGroupID is already in the Colosseum,
  *				  or other error
@@ -24,6 +24,7 @@ Colosseum::Colosseum(int n, int * trainingGroupsIDs) {}
  * Complexity:	  O(log(n)), n - number of groups in Colosseum
  */
 StatusType Colosseum::addTrainingGroup(int trainingGroupID) {
+	if (trainingGroupID < 0) return INVALID_INPUT;
 	return SUCCESS;
 }
 
@@ -41,6 +42,9 @@ StatusType Colosseum::addTrainingGroup(int trainingGroupID) {
  * Complexity:	  O(log(m)), m - number of gladiators in Colosseum
  */
 StatusType Colosseum::addGladiator(int gladiatorID,int score,int trainingGroup){
+	if (gladiatorID < 0 || trainingGroup < 0 ||
+		score < 0 || 100 < score) return INVALID_INPUT;
+	
 	return SUCCESS;
 }
 /* Description:   Simulates a training group battle
@@ -62,6 +66,9 @@ StatusType Colosseum::addGladiator(int gladiatorID,int score,int trainingGroup){
  */
 StatusType Colosseum::trainingGroupFight(int trainingGroup1, int trainingGroup2,
 										 int k1, int k2) {
+	if (k1 <= 0 || k2<=0 ||
+		trainingGroup1 < 0 || trainingGroup2 < 0) return INVALID_INPUT;
+	
 	return SUCCESS;
 }
 
@@ -74,6 +81,7 @@ StatusType Colosseum::trainingGroupFight(int trainingGroup1, int trainingGroup2,
  * Complexity:	  O(1),
  */
 StatusType Colosseum::getMinTrainingGroup(int * trainingGroup){
+	if (!trainingGroup) return INVALID_INPUT;
 	return SUCCESS;
 }
 
