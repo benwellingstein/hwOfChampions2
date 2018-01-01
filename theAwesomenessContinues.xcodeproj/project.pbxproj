@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B5C8F5281FF5411800458B2F /* unitTestHistogram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5C8F5271FF5411800458B2F /* unitTestHistogram.cpp */; };
-		B5C8F5291FF544ED00458B2F /* Histogram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5C8F5231FF540F000458B2F /* Histogram.cpp */; };
+		B5C8F52C1FF5514E00458B2F /* MinHeap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5C8F52A1FF5514E00458B2F /* MinHeap.cpp */; };
+		B5C8F52F1FF5517F00458B2F /* unitTestMinHeap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5C8F52E1FF5517F00458B2F /* unitTestMinHeap.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -37,6 +37,9 @@
 		B5C8F5231FF540F000458B2F /* Histogram.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Histogram.cpp; sourceTree = "<group>"; };
 		B5C8F5241FF540F000458B2F /* Histogram.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Histogram.hpp; sourceTree = "<group>"; };
 		B5C8F5271FF5411800458B2F /* unitTestHistogram.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = unitTestHistogram.cpp; sourceTree = "<group>"; };
+		B5C8F52A1FF5514E00458B2F /* MinHeap.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MinHeap.cpp; sourceTree = "<group>"; };
+		B5C8F52B1FF5514E00458B2F /* MinHeap.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MinHeap.hpp; sourceTree = "<group>"; };
+		B5C8F52E1FF5517F00458B2F /* unitTestMinHeap.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = unitTestMinHeap.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +75,7 @@
 				B5491ECD1FF396EE003FD3CF /* library2.h */,
 				B5491EDB1FF39850003FD3CF /* library2.cpp */,
 				B5491ECC1FF396EE003FD3CF /* main2.cpp */,
+				B5C8F52D1FF5515300458B2F /* MinHeap */,
 				B5491EE01FF398EF003FD3CF /* Colosseum */,
 				B5491EDA1FF397E5003FD3CF /* Splay Tree */,
 				B5C8F5261FF540F800458B2F /* Histogram */,
@@ -115,6 +119,16 @@
 				B5C8F5271FF5411800458B2F /* unitTestHistogram.cpp */,
 			);
 			name = Histogram;
+			sourceTree = "<group>";
+		};
+		B5C8F52D1FF5515300458B2F /* MinHeap */ = {
+			isa = PBXGroup;
+			children = (
+				B5C8F52A1FF5514E00458B2F /* MinHeap.cpp */,
+				B5C8F52B1FF5514E00458B2F /* MinHeap.hpp */,
+				B5C8F52E1FF5517F00458B2F /* unitTestMinHeap.cpp */,
+			);
+			name = MinHeap;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -174,8 +188,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B5C8F5291FF544ED00458B2F /* Histogram.cpp in Sources */,
-				B5C8F5281FF5411800458B2F /* unitTestHistogram.cpp in Sources */,
+				B5C8F52C1FF5514E00458B2F /* MinHeap.cpp in Sources */,
+				B5C8F52F1FF5517F00458B2F /* unitTestMinHeap.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
