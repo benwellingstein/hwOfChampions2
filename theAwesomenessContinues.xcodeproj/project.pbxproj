@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		B5C8F52C1FF5514E00458B2F /* MinHeap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5C8F52A1FF5514E00458B2F /* MinHeap.cpp */; };
 		B5C8F52F1FF5517F00458B2F /* unitTestMinHeap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5C8F52E1FF5517F00458B2F /* unitTestMinHeap.cpp */; };
+		B5C8F5451FFD3A5F00458B2F /* TrainingHashTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5C8F5431FFD3A5E00458B2F /* TrainingHashTable.cpp */; };
+		B5C8F5491FFD442100458B2F /* Hash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5C8F5471FFD442100458B2F /* Hash.cpp */; };
+		B5C8F54D1FFD46A500458B2F /* DynamicArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5C8F54B1FFD46A500458B2F /* DynamicArray.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -40,6 +43,12 @@
 		B5C8F52A1FF5514E00458B2F /* MinHeap.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MinHeap.cpp; sourceTree = "<group>"; };
 		B5C8F52B1FF5514E00458B2F /* MinHeap.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MinHeap.hpp; sourceTree = "<group>"; };
 		B5C8F52E1FF5517F00458B2F /* unitTestMinHeap.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = unitTestMinHeap.cpp; sourceTree = "<group>"; };
+		B5C8F5431FFD3A5E00458B2F /* TrainingHashTable.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TrainingHashTable.cpp; sourceTree = "<group>"; };
+		B5C8F5441FFD3A5E00458B2F /* TrainingHashTable.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TrainingHashTable.hpp; sourceTree = "<group>"; };
+		B5C8F5471FFD442100458B2F /* Hash.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Hash.cpp; sourceTree = "<group>"; };
+		B5C8F5481FFD442100458B2F /* Hash.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Hash.hpp; sourceTree = "<group>"; };
+		B5C8F54B1FFD46A500458B2F /* DynamicArray.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DynamicArray.cpp; sourceTree = "<group>"; };
+		B5C8F54C1FFD46A500458B2F /* DynamicArray.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = DynamicArray.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +84,7 @@
 				B5491ECD1FF396EE003FD3CF /* library2.h */,
 				B5491EDB1FF39850003FD3CF /* library2.cpp */,
 				B5491ECC1FF396EE003FD3CF /* main2.cpp */,
+				B5C8F5461FFD3A6500458B2F /* TrainingHashTable */,
 				B5C8F52D1FF5515300458B2F /* MinHeap */,
 				B5491EE01FF398EF003FD3CF /* Colosseum */,
 				B5491EDA1FF397E5003FD3CF /* Splay Tree */,
@@ -129,6 +139,35 @@
 				B5C8F52E1FF5517F00458B2F /* unitTestMinHeap.cpp */,
 			);
 			name = MinHeap;
+			sourceTree = "<group>";
+		};
+		B5C8F5461FFD3A6500458B2F /* TrainingHashTable */ = {
+			isa = PBXGroup;
+			children = (
+				B5C8F5441FFD3A5E00458B2F /* TrainingHashTable.hpp */,
+				B5C8F5431FFD3A5E00458B2F /* TrainingHashTable.cpp */,
+				B5C8F54E1FFD46A800458B2F /* DynamicArray */,
+				B5C8F54A1FFD442900458B2F /* Hash */,
+			);
+			name = TrainingHashTable;
+			sourceTree = "<group>";
+		};
+		B5C8F54A1FFD442900458B2F /* Hash */ = {
+			isa = PBXGroup;
+			children = (
+				B5C8F5471FFD442100458B2F /* Hash.cpp */,
+				B5C8F5481FFD442100458B2F /* Hash.hpp */,
+			);
+			name = Hash;
+			sourceTree = "<group>";
+		};
+		B5C8F54E1FFD46A800458B2F /* DynamicArray */ = {
+			isa = PBXGroup;
+			children = (
+				B5C8F54C1FFD46A500458B2F /* DynamicArray.hpp */,
+				B5C8F54B1FFD46A500458B2F /* DynamicArray.cpp */,
+			);
+			name = DynamicArray;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -189,7 +228,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				B5C8F52C1FF5514E00458B2F /* MinHeap.cpp in Sources */,
+				B5C8F5491FFD442100458B2F /* Hash.cpp in Sources */,
+				B5C8F54D1FFD46A500458B2F /* DynamicArray.cpp in Sources */,
 				B5C8F52F1FF5517F00458B2F /* unitTestMinHeap.cpp in Sources */,
+				B5C8F5451FFD3A5F00458B2F /* TrainingHashTable.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
