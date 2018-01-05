@@ -540,6 +540,37 @@ private:
 	
 	static void ZigZagLR(Node** greatGrandFather, Node* grandFather,
 						 Node* father, Node* child) {
+        int totalSum = grandFather->sumOfNodes;
+        int totalNum = grandFather->numOfNodes;
+        
+        grandFather->sumOfNodes = *grandFather->data;
+        grandFather->numOfNodes = 1;
+        
+        if(grandFather->rChild) {
+            grandFather->sumOfNodes += grandFather->rChild->sumOfNodes;
+            grandFather->numOfNodes += grandFather->rChild->numOfNodes;
+        }
+        if(child->rChild) {
+            grandFather->sumOfNodes += child->rChild->sumOfNodes;
+            grandFather->numOfNodes += child->rChild->numOfNodes;
+        }
+        
+        father->sumOfNodes = *father->data;
+        father->numOfNodes = 1;
+        
+        if(father->lChild) {
+            father->sumOfNodes += father->lChild->sumOfNodes;
+            father->numOfNodes += father->lChild->numOfNodes;
+        }
+        if(child->lChild) {
+            grandFather->sumOfNodes += child->lChild->sumOfNodes;
+            grandFather->numOfNodes += child->lChild->numOfNodes;
+        }
+        
+        child->sumOfNodes = totalSum;
+        child->numOfNodes = totalNum;
+        
+        
 		*greatGrandFather = child;
 		father->rChild = child->lChild;
 		grandFather->lChild = child->rChild;
@@ -554,6 +585,36 @@ private:
 
 	static void ZigZagRL(Node** greatGrandFather, Node* grandFather,
 						 Node* father, Node* child) {
+        int totalSum = grandFather->sumOfNodes;
+        int totalNum = grandFather->numOfNodes;
+        
+        grandFather->sumOfNodes = *grandFather->data;
+        grandFather->numOfNodes = 1;
+        
+        if(grandFather->lChild) {
+            grandFather->sumOfNodes += grandFather->lChild->sumOfNodes;
+            grandFather->numOfNodes += grandFather->lChild->numOfNodes;
+        }
+        if(child->lChild) {
+            grandFather->sumOfNodes += child->lChild->sumOfNodes;
+            grandFather->numOfNodes += child->lChild->numOfNodes;
+        }
+        
+        father->sumOfNodes = *father->data;
+        father->numOfNodes = 1;
+        
+        if(father->rChild) {
+            father->sumOfNodes += father->rChild->sumOfNodes;
+            father->numOfNodes += father->rChild->numOfNodes;
+        }
+        if(child->rChild) {
+            grandFather->sumOfNodes += child->rChild->sumOfNodes;
+            grandFather->numOfNodes += child->rChild->numOfNodes;
+        }
+
+        child->sumOfNodes = totalSum;
+        child->numOfNodes = totalNum;
+        
 		*greatGrandFather = child;
 		father->lChild = child->rChild;
 		grandFather->rChild = child->lChild;

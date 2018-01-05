@@ -76,7 +76,7 @@ void testInsertSplayTree() {
     int* n06 = new int(6);
     int* n07 = new int(29);
     int* n08 = new int(44);
-    int* n09 = new int(34);/*
+    int* n09 = new int(34);
     int* n10 = new int(19);
     int* n11 = new int(73);
     int* n12 = new int(27);
@@ -87,7 +87,7 @@ void testInsertSplayTree() {
     int* n17 = new int(64);
     int* n18 = new int(70);
     int* n19 = new int(98);
-    int* n20 = new int(54);*/
+    int* n20 = new int(54);
 
     ASSERT_TRUE(tree.totalNumberOfNodes() == 0);
     ASSERT_TRUE(tree.totalTreeValue() == -1);
@@ -130,6 +130,50 @@ void testInsertSplayTree() {
     ASSERT_TRUE(tree.totalNumberOfNodes() == 9);
     ASSERT_TRUE(tree.totalTreeValue() == 282);
     
+    ASSERT_TRUE(tree.insert(n10));
+    ASSERT_TRUE(tree.totalNumberOfNodes() == 10);
+    ASSERT_TRUE(tree.totalTreeValue() == 301);
+    
+    ASSERT_TRUE(tree.insert(n11));
+    ASSERT_TRUE(tree.totalNumberOfNodes() == 11);
+    ASSERT_TRUE(tree.totalTreeValue() == 374);
+
+    ASSERT_TRUE(tree.insert(n12));
+    ASSERT_TRUE(tree.totalNumberOfNodes() == 12);
+    ASSERT_TRUE(tree.totalTreeValue() == 401);
+
+    ASSERT_TRUE(tree.insert(n13));
+    ASSERT_TRUE(tree.totalNumberOfNodes() == 13);
+    ASSERT_TRUE(tree.totalTreeValue() == 426);
+    
+    ASSERT_TRUE(tree.insert(n14));
+    ASSERT_TRUE(tree.totalNumberOfNodes() == 14);
+    ASSERT_TRUE(tree.totalTreeValue() == 443);
+
+    ASSERT_TRUE(tree.insert(n15));
+    ASSERT_TRUE(tree.totalNumberOfNodes() == 15);
+    ASSERT_TRUE(tree.totalTreeValue() == 500);
+
+    ASSERT_TRUE(tree.insert(n16));
+    ASSERT_TRUE(tree.totalNumberOfNodes() == 16);
+    ASSERT_TRUE(tree.totalTreeValue() == 596);
+
+    ASSERT_TRUE(tree.insert(n17));
+    ASSERT_TRUE(tree.totalNumberOfNodes() == 17);
+    ASSERT_TRUE(tree.totalTreeValue() == 660);
+
+    ASSERT_TRUE(tree.insert(n18));
+    ASSERT_TRUE(tree.totalNumberOfNodes() == 18);
+    ASSERT_TRUE(tree.totalTreeValue() == 730);
+
+    ASSERT_TRUE(tree.insert(n19));
+    ASSERT_TRUE(tree.totalNumberOfNodes() == 19);
+    ASSERT_TRUE(tree.totalTreeValue() == 828);
+
+    ASSERT_TRUE(tree.insert(n20));
+    ASSERT_TRUE(tree.totalNumberOfNodes() == 20);
+    ASSERT_TRUE(tree.totalTreeValue() == 882);
+
 }
 
 int main() {
