@@ -58,6 +58,7 @@ void testMakeSplayTree() {
     
     std::stringstream out1;
     tree.print(out1);
+    //cout<<out1.str();
     ASSERT_TRUE(out1.str() == "54 49 24 17 6 4 19 21 27 25 34 29 44 96 70 57 64 71 73 98 |4 6 17 19 21 24 25 27 29 34 44 49 54 57 64 70 71 73 96 98 |4 6 21 19 17 25 29 44 34 27 24 49 64 57 73 71 70 98 96 54 |");
 
 }
