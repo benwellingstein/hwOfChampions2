@@ -70,13 +70,13 @@ void testInsertSplayTree() {
     
     int* n01 = new int(71);
     int* n02 = new int(21);
-    int* n03 = new int(24);/*
+    int* n03 = new int(24);
     int* n04 = new int(49);
     int* n05 = new int(4);
     int* n06 = new int(6);
     int* n07 = new int(29);
     int* n08 = new int(44);
-    int* n09 = new int(34);
+    int* n09 = new int(34);/*
     int* n10 = new int(19);
     int* n11 = new int(73);
     int* n12 = new int(27);
@@ -99,15 +99,36 @@ void testInsertSplayTree() {
     ASSERT_TRUE(tree.totalTreeValue() == 71);
     
     ASSERT_TRUE(tree.insert(n02));
-    
     ASSERT_TRUE(tree.totalNumberOfNodes() == 2);
     ASSERT_TRUE(tree.totalTreeValue() == 92);
 
     ASSERT_TRUE(tree.insert(n03));
-    
     ASSERT_TRUE(tree.totalNumberOfNodes() == 3);
     ASSERT_TRUE(tree.totalTreeValue() == 116);
     
+    ASSERT_TRUE(tree.insert(n04));
+    ASSERT_TRUE(tree.totalNumberOfNodes() == 4);
+    ASSERT_TRUE(tree.totalTreeValue() == 165);
+    
+    ASSERT_TRUE(tree.insert(n05));
+    ASSERT_TRUE(tree.totalNumberOfNodes() == 5);
+    ASSERT_TRUE(tree.totalTreeValue() == 169);
+    
+    ASSERT_TRUE(tree.insert(n06));
+    ASSERT_TRUE(tree.totalNumberOfNodes() == 6);
+    ASSERT_TRUE(tree.totalTreeValue() == 175);
+    
+    ASSERT_TRUE(tree.insert(n07));
+    ASSERT_TRUE(tree.totalNumberOfNodes() == 7);
+    ASSERT_TRUE(tree.totalTreeValue() == 204);
+    
+    ASSERT_TRUE(tree.insert(n08));
+    ASSERT_TRUE(tree.totalNumberOfNodes() == 8);
+    ASSERT_TRUE(tree.totalTreeValue() == 248);
+    
+    ASSERT_TRUE(tree.insert(n09));
+    ASSERT_TRUE(tree.totalNumberOfNodes() == 9);
+    ASSERT_TRUE(tree.totalTreeValue() == 282);
     
 }
 

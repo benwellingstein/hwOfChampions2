@@ -480,54 +480,62 @@ private:
 	//--------splay tree helper functions----------
 	
 	static void ZigL(Node** grandFather, Node* father, Node* child) {
-		*grandFather = child;
-		father->lChild = child->rChild;
-		child->rChild = father;
-        child->father = NULL;
-        father->father = child;
-
         child->sumOfNodes = father->sumOfNodes;
         child->numOfNodes = father->numOfNodes;
-
-        if (father->lChild) {
-            father->sumOfNodes = father->lChild->sumOfNodes;
-            father->numOfNodes = father->lChild->numOfNodes;
+        father->sumOfNodes = *father->data;
+        father->numOfNodes = 1;
         
-            father->lChild->father = father;
-        } else {
-            father->sumOfNodes = *father->data;
-            father->numOfNodes = 1;
-        }
-        if (child->lChild) {
-            father->sumOfNodes += child->lChild->sumOfNodes;
-            father->numOfNodes += child->lChild->numOfNodes;
-        }
-	}
-	
-	static void ZigR(Node** grandFather, Node* father, Node* child ) {
-		*grandFather = child;
-		father->rChild = child->lChild;
-		child->lChild = father;
-        child->father = NULL;
-        father->father = child;
-
-        child->sumOfNodes = father->sumOfNodes;
-        child->numOfNodes = father->numOfNodes;
-
         if (father->rChild) {
-            father->sumOfNodes = father->rChild->sumOfNodes;
-            father->numOfNodes = father->rChild->numOfNodes;
-        
-            father->rChild->father = father;
-        } else {
-            father->sumOfNodes = *father->data;
-            father->numOfNodes = 1;
+            father->sumOfNodes += father->rChild->sumOfNodes;
+            father->numOfNodes += father->rChild->numOfNodes;
         }
         
         if (child->rChild) {
             father->sumOfNodes += child->rChild->sumOfNodes;
             father->numOfNodes += child->rChild->numOfNodes;
         }
+        
+		*grandFather = child;
+		father->lChild = child->rChild;
+		child->rChild = father;
+        child->father = NULL;
+        father->father = child;
+
+
+
+        if (father->lChild) {
+            father->lChild->father = father;
+        }
+
+	}
+	
+	static void ZigR(Node** grandFather, Node* father, Node* child ) {
+        child->sumOfNodes = father->sumOfNodes;
+        child->numOfNodes = father->numOfNodes;
+        father->sumOfNodes = *father->data;
+        father->numOfNodes = 1;
+        
+        if (father->lChild) {
+            father->sumOfNodes += father->lChild->sumOfNodes;
+            father->numOfNodes += father->lChild->numOfNodes;
+        }
+        
+        if (child->lChild) {
+            father->sumOfNodes += child->lChild->sumOfNodes;
+            father->numOfNodes += child->lChild->numOfNodes;
+        }
+        
+		*grandFather = child;
+		father->rChild = child->lChild;
+		child->lChild = father;
+        child->father = NULL;
+        father->father = child;
+
+        if (father->rChild) {
+            father->rChild->father = father;
+        }
+        
+
 	}
 	
 	static void ZigZagLR(Node** greatGrandFather, Node* grandFather,
@@ -560,6 +568,33 @@ private:
 
 	static void ZigZigRR(Node** greatGrandFather, Node* grandFather,
 						  Node* father, Node* child) {
+        int totalSum = grandFather->sumOfNodes;
+        int totalNum = grandFather->numOfNodes;
+        
+        grandFather->sumOfNodes = *grandFather->data;
+        grandFather->numOfNodes = 1;
+        
+        if(father->lChild) {
+            grandFather->sumOfNodes += father->lChild->sumOfNodes;
+            grandFather->numOfNodes += father->lChild->numOfNodes;
+        }
+        
+        if(grandFather->lChild) {
+            grandFather->sumOfNodes += grandFather->lChild->sumOfNodes;
+            grandFather->numOfNodes += grandFather->lChild->numOfNodes;
+        }
+        
+        father->sumOfNodes = *father->data + grandFather->sumOfNodes;
+        father->numOfNodes = 1 + grandFather->numOfNodes;
+        
+        if(child->lChild) {
+            father->sumOfNodes += child->lChild->sumOfNodes;
+            father->numOfNodes += child->lChild->numOfNodes;
+        }
+        
+        child->sumOfNodes = totalSum;
+        child->numOfNodes = totalNum;
+        
 		*greatGrandFather = child;
 		grandFather->rChild = father->lChild;
 		father->rChild = child->lChild;
@@ -576,6 +611,33 @@ private:
 	
 	static void ZigZigLL(Node** greatGrandFather, Node* grandFather,
 						  Node* father, Node* child) {
+        int totalSum = grandFather->sumOfNodes;
+        int totalNum = grandFather->numOfNodes;
+        
+        grandFather->sumOfNodes = *grandFather->data;
+        grandFather->numOfNodes = 1;
+        
+        if(father->rChild) {
+            grandFather->sumOfNodes += father->rChild->sumOfNodes;
+            grandFather->numOfNodes += father->rChild->numOfNodes;
+        }
+        
+        if(grandFather->rChild) {
+            grandFather->sumOfNodes += grandFather->rChild->sumOfNodes;
+            grandFather->numOfNodes += grandFather->rChild->numOfNodes;
+        }
+        
+        father->sumOfNodes = *father->data + grandFather->sumOfNodes;
+        father->numOfNodes = 1 + grandFather->numOfNodes;
+        
+        if(child->rChild) {
+            father->sumOfNodes += child->rChild->sumOfNodes;
+            father->numOfNodes += child->rChild->numOfNodes;
+        }
+        
+        child->sumOfNodes = totalSum;
+        child->numOfNodes = totalNum;
+        
 		*greatGrandFather = child;
 		father->lChild = child->rChild;
 		child->rChild = father;
