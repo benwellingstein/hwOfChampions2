@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		B5C8F52C1FF5514E00458B2F /* MinHeap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5C8F52A1FF5514E00458B2F /* MinHeap.cpp */; };
 		B5C8F52F1FF5517F00458B2F /* unitTestMinHeap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5C8F52E1FF5517F00458B2F /* unitTestMinHeap.cpp */; };
-		B5C8F5451FFD3A5F00458B2F /* TrainingHashTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5C8F5431FFD3A5E00458B2F /* TrainingHashTable.cpp */; };
 		B5C8F5491FFD442100458B2F /* Hash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5C8F5471FFD442100458B2F /* Hash.cpp */; };
 		B5C8F54D1FFD46A500458B2F /* DynamicArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5C8F54B1FFD46A500458B2F /* DynamicArray.cpp */; };
 /* End PBXBuildFile section */
@@ -231,7 +230,6 @@
 				B5C8F5491FFD442100458B2F /* Hash.cpp in Sources */,
 				B5C8F54D1FFD46A500458B2F /* DynamicArray.cpp in Sources */,
 				B5C8F52F1FF5517F00458B2F /* unitTestMinHeap.cpp in Sources */,
-				B5C8F5451FFD3A5F00458B2F /* TrainingHashTable.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
