@@ -9,27 +9,26 @@ using std::cout;
 using std::ostream;
 using std::endl;
 
-template <class T, class UpdateFunction>
+//template <class T, class UpdateFunction>
+
+//template <class T>
+#define T int
 class SplayTree {
 private:
 	struct Node {
 		Node(T* data, Node* father = NULL, Node* left = NULL, Node* right =
-			 NULL): data(data), father(father), lChild(left), rChild(right) {}
+			 NULL): data(data), father(father), lChild(left), rChild(right), sumOfNodes(*data), numOfNodes(1) {}
 		
-		bool operator<(const Node& other) const {
-			return *data < *other.data;
-		}
-		
-		bool operator==(const Node& other) const {
-			return *data == *other.data;
-		}
-		
-		bool operator!=(const Node& other) const {
-			return !(this == other);
-		}
+        bool operator<(const Node& other) const;
+        bool operator==(const Node& other) const;
+        bool operator!=(const Node& other) const;
+        
+        int totalValue() {
+            return sumOfNodes;
+        }
 		
 		//helper print function for debugging
-		ostream& print(ostream& os) const {
+        ostream& print(ostream& os) const {
 			os  << *data << " ";
 			return os;
 		}
@@ -38,6 +37,8 @@ private:
 		Node* father;
 		Node* lChild;
 		Node* rChild;
+        int sumOfNodes;
+        int numOfNodes;
 	};
 	
 	/*Each tree will keep a pointer to its head node and a pointer to the
@@ -47,9 +48,8 @@ private:
 	Node* top;
 	
 public:
-	SplayTree(Node* root = NULL): head(root), top(NULL) {}
-	
-	~SplayTree() {
+    SplayTree(Node* root = NULL): head(root), top(NULL) {}
+    ~SplayTree() {
 		inOrderRecDestroy(head);
 		head = NULL;
 		top = NULL;
@@ -59,7 +59,7 @@ public:
 	
 	
 	//splay tree remove function
-	bool remove(const T& val) {
+    bool remove(const T& val) {
 		if(!exist(val)) return false;
 		splay(val);
 		if (!head->lChild && !head->rChild) {
@@ -102,19 +102,21 @@ public:
 	}
 
 	//splay tree insert function
-	bool insert(T* val) {
+    bool insert(T* val) {
 		Node* newNode = new Node(val);
 		if (!head) {
 			head = newNode;
 			top = head;
 			return true;
 		}
-		if(exist(*val)) return false;
+		//if(exist(*val)) return false;
 		find(*val);
 		if( *val < *(head->data) ) {
 			Node* oldHead = head;
 			newNode->rChild = oldHead;
 			newNode->lChild = oldHead->lChild;
+            newNode->numOfNodes = oldHead->numOfNodes + 1;
+            newNode->sumOfNodes = oldHead->sumOfNodes + *val;
 			oldHead->father = newNode;
 			
 			if (oldHead->lChild) {
@@ -129,6 +131,8 @@ public:
 			newNode->lChild = oldHead;
 			newNode->rChild = oldHead->rChild;
 			oldHead->father = newNode;
+            newNode->numOfNodes = oldHead->numOfNodes + 1;
+            newNode->sumOfNodes = oldHead->sumOfNodes + *val;
 			
 			if (oldHead->rChild) {
 				oldHead->rChild->father = newNode;
@@ -142,7 +146,20 @@ public:
 		
 		return true;
 	}
-	
+    
+    int totalNumberOfNodes() {
+        if (head==NULL) return 0;
+        return head->numOfNodes;
+    }
+    
+    int totalTreeValue() {
+        if (head==NULL) return -1;
+        return head->sumOfNodes;
+    }
+    
+    
+    
+    
    //splay tree find max function
 	static Node* findMax(Node* top) {
 		if(top == NULL) return NULL;
@@ -239,7 +256,7 @@ public:
 	 * the function will run on the data inside a node and _LIBCPP_INVOKE_RETURN
 	 * a boolean value to indicate if the data was treated
 	 */
-	void update(UpdateFunction updateFunction) {
+/*	void update(UpdateFunction updateFunction) {
 		int arraySize = size();
 		T** arrOriginal = new T*[arraySize + 1]();
 		T** arrChanged = new T*[arraySize + 1]();
@@ -265,7 +282,7 @@ public:
 		delete [] arrNotChanged;
 		delete [] arrFinal;
 	}
-	
+	*/
 
 	// boolean exists function - searches branch for given value
 	bool exist(const T& val) const {
@@ -309,41 +326,6 @@ public:
 	int size() {
 		return countNodes(head);
 	}
-	
-	
-	
-//	helper function for tests - helps insert values like a binary tree
-	bool insertBT(T* val) {
-		if (exist(*val)) return false;
-		if (!head) {
-            Node* newNode = new Node(val, NULL);
-			head=newNode;
-			return true;
-		} else {
-			Node* currNode = head;
-			while (1) {
-				if (*val < (*(*currNode).data)) {
-					if ((*currNode).lChild) {
-						currNode = currNode->lChild;
-					} else {
-                        Node* newNode = new Node(val, currNode);
-						(currNode->lChild = newNode);
-						return true;
-					}
-				} else {
-					if ((*currNode).rChild ) {
-						currNode = currNode->rChild;
-					} else {
-                        Node* newNode = new Node(val, currNode);
-						(currNode->rChild = newNode);
-						return true;
-					}
-				}
-			}
-		}
-		assert(false);
-		return false;
-	}
 
 
 	//helper function for debugging
@@ -353,8 +335,6 @@ public:
 		postOrder(os);
 		return os;
 	}
-
-	
 
 
 private:
@@ -398,7 +378,7 @@ private:
 	}
 	
 	//splits original into two arrays by update function
-	void runFunction(T** arrOriginal, T** arrChanged,T**  arrNotChanged,
+/*	void runFunction(T** arrOriginal, T** arrChanged,T**  arrNotChanged,
 					 UpdateFunction updateFunction) {
 		int i = 0;
 		int j = 0;
@@ -411,7 +391,7 @@ private:
 				j++;
 			}
 		}
-	}
+	}*/
 	
 	//merges arrays
 	void mergeSortArrays(T** arrChanged, T** arrNotChanged, T** arrFinal) {
