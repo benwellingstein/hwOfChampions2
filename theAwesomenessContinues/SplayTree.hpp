@@ -207,6 +207,36 @@ public:
 		return NULL;
 	}
 	
+    int sumOfBestN(int numberOfNodes) {
+        if( head->numOfNodes < numberOfNodes) return -1;
+        if( head->numOfNodes == numberOfNodes) return head->sumOfNodes;
+        Node* current = head;
+        bool done = false;
+        int nodesLeft = numberOfNodes;
+        int sum = 0;
+        while (!done) {
+            if(current->rChild) {
+                if(current->rChild->numOfNodes > nodesLeft) {
+                    current = current->rChild;
+                    continue;
+                }
+                if(current->rChild->numOfNodes == nodesLeft) return current->rChild->sumOfNodes + sum;
+                if(current->rChild->numOfNodes == nodesLeft - 1) return current->rChild->sumOfNodes + *current->data + sum;
+                
+                sum += current->rChild->sumOfNodes + *current->data;
+                nodesLeft -= current->rChild->numOfNodes + 1;
+                current = current->lChild;
+                continue;
+            }
+            if(nodesLeft == 1) return *current->data + sum;
+
+            sum += *current->data;
+            nodesLeft -= 1;
+            current = current->lChild;
+        }
+        return 0;
+    }
+    
 	//splay function
 	void splay(const T& val) {
 		if (!exist(val)) return;
