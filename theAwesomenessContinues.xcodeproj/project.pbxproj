@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AFC9213F200242D9000AE8F6 /* unitTestSplayTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF92224F1FFFBDCA00FA55CB /* unitTestSplayTree.cpp */; };
 		B58660562002402E00084F05 /* TrainingHashTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5C8F5431FFD3A5E00458B2F /* TrainingHashTable.cpp */; };
-		B58660572002402E00084F05 /* unitTestHashTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5C8F54F1FFD5CF300458B2F /* unitTestHashTable.cpp */; };
 		B58660582002402E00084F05 /* DynamicArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5C8F54B1FFD46A500458B2F /* DynamicArray.cpp */; };
 		B58660592002402E00084F05 /* Hash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5C8F5471FFD442100458B2F /* Hash.cpp */; };
 		B586605A2002403E00084F05 /* SplayTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5491ED61FF397C5003FD3CF /* SplayTree.cpp */; };
@@ -231,9 +231,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AFC9213F200242D9000AE8F6 /* unitTestSplayTree.cpp in Sources */,
 				B586605A2002403E00084F05 /* SplayTree.cpp in Sources */,
 				B58660562002402E00084F05 /* TrainingHashTable.cpp in Sources */,
-				B58660572002402E00084F05 /* unitTestHashTable.cpp in Sources */,
 				B58660582002402E00084F05 /* DynamicArray.cpp in Sources */,
 				B58660592002402E00084F05 /* Hash.cpp in Sources */,
 			);

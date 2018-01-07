@@ -28,9 +28,7 @@ private:
 		bool operator!=(const Node& other) const {
 			return !(*this == other);
 		}
-		
-
-		
+				
 		
         int totalValue() {
             return sumOfNodes;
@@ -135,19 +133,24 @@ public:
 
             newNode->sumOfNodes = oldHead->sumOfNodes + val;
             newNode->numOfNodes = oldHead->numOfNodes + 1;
-            oldHead->sumOfNodes = oldHead->data;
-            oldHead->numOfNodes = 1;
+
+//            oldHead->sumOfNodes = oldHead->data;
+//            oldHead->numOfNodes = 1;
+
+            //TODO
 
 			oldHead->father = newNode;
 			
 			if(oldHead->lChild) {
+                oldHead->sumOfNodes -= oldHead->lChild->sumOfNodes;
+                oldHead->numOfNodes -= oldHead->lChild->numOfNodes;
 				oldHead->lChild->father = newNode;
 				oldHead->lChild = NULL;
 			}
-            if(oldHead->rChild) {
-                oldHead->sumOfNodes += oldHead->rChild->sumOfNodes;
-                oldHead->numOfNodes += oldHead->rChild->numOfNodes;
-            }
+            //if(oldHead->rChild) {
+            //    oldHead->sumOfNodes += oldHead->rChild->sumOfNodes;
+            //    oldHead->numOfNodes += oldHead->rChild->numOfNodes;
+            //}
 			newNode->father = NULL;
 			head = newNode;
 			
@@ -158,20 +161,23 @@ public:
 			oldHead->father = newNode;
             newNode->numOfNodes = oldHead->numOfNodes + 1;
             newNode->sumOfNodes = oldHead->sumOfNodes + val;
-            oldHead->sumOfNodes = oldHead->data;
-            oldHead->numOfNodes = 1;
+
+//            oldHead->sumOfNodes = oldHead->data;
+//            oldHead->numOfNodes = 1;
             
 			if (oldHead->rChild) {
+                oldHead->sumOfNodes -= oldHead->rChild->sumOfNodes;
+                oldHead->numOfNodes -= oldHead->rChild->numOfNodes;
                 //newNode->numOfNodes -= oldHead->rChild->numOfNodes;
                 //newNode->sumOfNodes -= oldHead->rChild->sumOfNodes;
                 
 				oldHead->rChild->father = newNode;
 				oldHead->rChild = NULL;
 			}
-            if(oldHead->lChild) {
-                oldHead->sumOfNodes += oldHead->lChild->sumOfNodes;
-                oldHead->numOfNodes += oldHead->lChild->numOfNodes;
-            }
+            //if(oldHead->lChild) {
+            //    oldHead->sumOfNodes += oldHead->lChild->sumOfNodes;
+            //    oldHead->numOfNodes += oldHead->lChild->numOfNodes;
+            //}
             
 			head = newNode;
 			if (top && (top->data) < val) top = newNode;
@@ -241,11 +247,11 @@ public:
                 if(current->rChild->numOfNodes >= nodesLeft - current->repetitions) return current->rChild->sumOfNodes + current->data * (nodesLeft - current->rChild->numOfNodes) + sum;
                 
                 sum += current->rChild->sumOfNodes + current->data * current->repetitions;
-                nodesLeft -= current->rChild->numOfNodes + current->rChild->repetitions;
+                nodesLeft -= current->rChild->numOfNodes + current->repetitions;
                 current = current->lChild;
                 continue;
             }
-            if(nodesLeft == 1) return current->data * current->repetitions + sum;
+            if(nodesLeft <= current->repetitions) return current->data * nodesLeft + sum;
 
             sum += current->data * current->repetitions;
             nodesLeft -= current->repetitions;
