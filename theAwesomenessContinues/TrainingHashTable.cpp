@@ -90,14 +90,14 @@ void* TrainingHashTable::trainingGroupFight(int trainingGroup1, int trainingGrou
 	int group1Power = group1->power(k1);
 	int group2Power = group2->power(k2);
 	
-	//if tie return lower id team
+	//if tie lower id wins - return higher id
 	if (group1Power == group2Power){
 		if (trainingGroup1 < trainingGroup2) {
-			group1->disqualify();
-			return group1->heapP();
-		} else {
 			group2->disqualify();
 			return group2->heapP();
+		} else {
+			group1->disqualify();
+			return group1->heapP();
 		}
 	}
 	//return loosing team

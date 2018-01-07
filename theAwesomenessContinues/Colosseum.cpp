@@ -35,6 +35,7 @@ Colosseum::Colosseum(int n, int* ID_Arr) {
 StatusType Colosseum::addTrainingGroup(int trainingGroupID) {
 	if (trainingGroupID < 0) return INVALID_INPUT;
 	if (trainingTable->exists(trainingGroupID) ) return FAILURE;
+	
 	void* heapDataP = groupHeap->insert(trainingGroupID);
 	trainingTable->insert(trainingGroupID, heapDataP);
 	return SUCCESS;
@@ -84,11 +85,14 @@ StatusType Colosseum::trainingGroupFight(int ID1, int ID2,
 										 int k1, int k2) {
 	if (k1 <= 0 || k2<=0 ||
 		ID1 < 0 || ID2 < 0) return INVALID_INPUT;
-	if (trainingTable->isInactive(ID1) ||
-		trainingTable->isInactive(ID2) ||
-		trainingTable->illegalK(ID1, k1) ||
-		trainingTable->illegalK(ID2, k2)) return FAILURE;
+	
+	//TODO -remove if not needed
+//	if (trainingTable->isInactive(ID1) ||
+//		trainingTable->isInactive(ID2) ||
+//		trainingTable->illegalK(ID1, k1) ||
+//		trainingTable->illegalK(ID2, k2)) return FAILURE;
 	void* loosingGroup = trainingTable->trainingGroupFight(ID1, ID2, k1, k2);
+	if (!loosingGroup) return FAILURE;
 	groupHeap->decKey(loosingGroup, -1);
 	groupHeap->delMin();
 	return SUCCESS;

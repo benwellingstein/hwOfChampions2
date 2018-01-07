@@ -12,6 +12,7 @@ MinHeap::MinHeap(int n,int* arr, void** res) : size(0) {
 void* MinHeap::insert(int x) {
 	long long directions = getNextDirections(1);
 	return insertNode(x, head, directions, len(directions), 2);
+
 }
 
 void MinHeap::decKey(void* p, int x) {
@@ -29,9 +30,9 @@ void MinHeap::delMin(){
 	switchPlaces(head, lastNode);
 	if (oldHead->father->left == oldHead)	oldHead->father->left = NULL;
 	else 									oldHead->father->right = NULL;
-	
-	delete oldHead;
 	size--;
+
+	delete oldHead;
 	siftDown(head);
 }
 
@@ -92,7 +93,7 @@ HeapNode* MinHeap::findSiftDownNode(HeapNode* node) {
 	if (!node->left) return node->val > node->right->val ? node->right : NULL;
 	
 	//both exist if father is larger than sons
-	if (node->val > node->right->val || node->val > node->right->val) {
+	if (node->val > node->left->val || node->val > node->right->val) {
 		return node->right->val > node->left->val ? node->left : node->right;
 	}
 	return NULL;
@@ -214,6 +215,7 @@ void* MinHeap::insertNode(int x, HeapNode* currNode, long long directions,
 		if (getDig(directions, currDig, dLen) == 0) currNode->left = newNode;
 		else 										currNode->right = newNode;
 	}
+	siftUp(newNode);
 	return newNode;
 }
 
