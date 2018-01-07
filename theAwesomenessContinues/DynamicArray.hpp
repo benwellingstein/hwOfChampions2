@@ -6,7 +6,6 @@
 #include <assert.h>
 
 
-
 template <class T>
 class DynamicArray {
 public:
@@ -73,21 +72,10 @@ private:
 		arr = newArr;
 		size = newSize;
 	}
-	
-	
 	int size;
 	int amountOfData;
 	node** arr;
-	
-	
 };
-
-
-
-
-
-
-
 
 
 #endif /* DynamicArray_hpp */

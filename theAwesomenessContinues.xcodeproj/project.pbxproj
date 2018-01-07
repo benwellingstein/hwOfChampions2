@@ -8,10 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		B58660562002402E00084F05 /* TrainingHashTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5C8F5431FFD3A5E00458B2F /* TrainingHashTable.cpp */; };
-		B58660572002402E00084F05 /* unitTestHashTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5C8F54F1FFD5CF300458B2F /* unitTestHashTable.cpp */; };
-		B58660582002402E00084F05 /* DynamicArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5C8F54B1FFD46A500458B2F /* DynamicArray.cpp */; };
 		B58660592002402E00084F05 /* Hash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5C8F5471FFD442100458B2F /* Hash.cpp */; };
 		B586605A2002403E00084F05 /* SplayTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5491ED61FF397C5003FD3CF /* SplayTree.cpp */; };
+		B586605E2002430400084F05 /* MinHeap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5C8F52A1FF5514E00458B2F /* MinHeap.cpp */; };
+		B586605F2002430400084F05 /* Colosseum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5491EDD1FF398E9003FD3CF /* Colosseum.cpp */; };
+		B58660602002430400084F05 /* unitTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5491EE11FF3A6CD003FD3CF /* unitTest.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -38,6 +39,7 @@
 		B5491EDD1FF398E9003FD3CF /* Colosseum.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Colosseum.cpp; sourceTree = "<group>"; };
 		B5491EDE1FF398E9003FD3CF /* Colosseum.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Colosseum.hpp; sourceTree = "<group>"; };
 		B5491EE11FF3A6CD003FD3CF /* unitTest.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = unitTest.cpp; sourceTree = "<group>"; };
+		B586605B2002425D00084F05 /* SplayTreeModified.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SplayTreeModified.hpp; sourceTree = "<group>"; };
 		B5C8F5231FF540F000458B2F /* Histogram.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Histogram.cpp; sourceTree = "<group>"; };
 		B5C8F5241FF540F000458B2F /* Histogram.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Histogram.hpp; sourceTree = "<group>"; };
 		B5C8F5271FF5411800458B2F /* unitTestHistogram.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = unitTestHistogram.cpp; sourceTree = "<group>"; };
@@ -48,7 +50,6 @@
 		B5C8F5441FFD3A5E00458B2F /* TrainingHashTable.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TrainingHashTable.hpp; sourceTree = "<group>"; };
 		B5C8F5471FFD442100458B2F /* Hash.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Hash.cpp; sourceTree = "<group>"; };
 		B5C8F5481FFD442100458B2F /* Hash.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Hash.hpp; sourceTree = "<group>"; };
-		B5C8F54B1FFD46A500458B2F /* DynamicArray.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DynamicArray.cpp; sourceTree = "<group>"; };
 		B5C8F54C1FFD46A500458B2F /* DynamicArray.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = DynamicArray.hpp; sourceTree = "<group>"; };
 		B5C8F54F1FFD5CF300458B2F /* unitTestHashTable.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = unitTestHashTable.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -118,6 +119,7 @@
 			children = (
 				B5491EDD1FF398E9003FD3CF /* Colosseum.cpp */,
 				B5491EDE1FF398E9003FD3CF /* Colosseum.hpp */,
+				B586605B2002425D00084F05 /* SplayTreeModified.hpp */,
 				B5491EE11FF3A6CD003FD3CF /* unitTest.cpp */,
 			);
 			name = Colosseum;
@@ -169,7 +171,6 @@
 			isa = PBXGroup;
 			children = (
 				B5C8F54C1FFD46A500458B2F /* DynamicArray.hpp */,
-				B5C8F54B1FFD46A500458B2F /* DynamicArray.cpp */,
 			);
 			name = DynamicArray;
 			sourceTree = "<group>";
@@ -231,10 +232,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B586605E2002430400084F05 /* MinHeap.cpp in Sources */,
+				B586605F2002430400084F05 /* Colosseum.cpp in Sources */,
+				B58660602002430400084F05 /* unitTest.cpp in Sources */,
 				B586605A2002403E00084F05 /* SplayTree.cpp in Sources */,
 				B58660562002402E00084F05 /* TrainingHashTable.cpp in Sources */,
-				B58660572002402E00084F05 /* unitTestHashTable.cpp in Sources */,
-				B58660582002402E00084F05 /* DynamicArray.cpp in Sources */,
 				B58660592002402E00084F05 /* Hash.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

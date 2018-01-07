@@ -6,7 +6,7 @@
 #include "library2.h"
 #include "TrainingHashTable.hpp"
 #include "MinHeap.hpp"
-#include "SplayTree.hpp"
+#include "SplayTreeModified.hpp"
 
 class badArgException : public std::exception {};
 
@@ -82,9 +82,9 @@ public:
 	StatusType getMinTrainingGroup(int * trainingGroup);
 	
 private:
-	MinHeap groupHeap;
-	TrainingHashTable trainingTable;
-	SplayTree<int> gladiatorTree;
+	MinHeap* groupHeap;
+	TrainingHashTable* trainingTable;
+	SplayTreeModified<int>* gladiatorTree;
 };
 
 
