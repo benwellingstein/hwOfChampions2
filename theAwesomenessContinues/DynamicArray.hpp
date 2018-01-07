@@ -6,13 +6,14 @@
 #include <assert.h>
 
 
-
 template <class T>
 class DynamicArray {
 public:
-	explicit DynamicArray(int size) : size(size), amountOfData(0) {
+	explicit DynamicArray(int s) : size(2*s+1), amountOfData(0) {
 		arr = new node*[size];
-		for (int i=0; i < size; ++i) 	arr[i] = NULL;
+		for (int i=0; i < size; ++i) {
+			arr[i] = NULL;
+		}
 	};
 	
 	//recieves pointer to data and index of data to insert to.
@@ -37,7 +38,7 @@ public:
 	bool exists(const T* group, int i) const{
 		node* currNode = arr[i];
 		while (currNode) {
-			if (currNode->data == group) return true;
+			if (*currNode->data == *group) return true;
 			currNode = currNode->next;
 		}
 		return false;
@@ -47,7 +48,7 @@ public:
 		if (!exists(group, i)) return NULL;
 		node* currNode = arr[i];
 		while (currNode) {
-			if (currNode->data == group) return currNode->data;
+			if (*currNode->data == *group) return currNode->data;
 			currNode = currNode->next;
 		}
 		assert(false);
@@ -66,28 +67,23 @@ private:
 	
 		int newSize = size*2+1;
 		node** newArr = new node*[newSize];
+		//copy old
 		for (int i=0; i < size; ++i) {
 			newArr[i] = arr[i];
+		}
+		//fill remaining with NULL
+		for (int i= size; i < newSize; ++i ) {
+			newArr[i] = NULL;
 		}
 		delete[] arr;
 		arr = newArr;
 		size = newSize;
 	}
 	
-	
 	int size;
 	int amountOfData;
 	node** arr;
-	
-	
 };
-
-
-
-
-
-
-
 
 
 #endif /* DynamicArray_hpp */

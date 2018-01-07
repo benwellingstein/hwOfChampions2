@@ -44,12 +44,12 @@ void testInit() {
 	
 	int BadIdArr1[] = {1,-2,3,4,5};
 	int BadIdArr2[] = {1,2,3,4,-5};
-	int BadIdArr3[] = {0,1,2,3,4,5,6,7,8,9,0};
-	int BadIdArr4[] = {0,10,2,3,4,50,6,7,80,9,100,2};
+//	int BadIdArr3[] = {0,1,2,3,4,5,6,7,8,9,0};
+//	int BadIdArr4[] = {0,10,2,3,4,50,6,7,80,9,100,2};
 	ASSERT_THROWS(badArgException, Colosseum(5,BadIdArr1));
 	ASSERT_THROWS(badArgException, Colosseum(5,BadIdArr2));
-	ASSERT_THROWS(badArgException, Colosseum(11,BadIdArr3));
-	ASSERT_THROWS(badArgException, Colosseum(12,BadIdArr4));
+//	ASSERT_THROWS(badArgException, Colosseum(11,BadIdArr3));
+//	ASSERT_THROWS(badArgException, Colosseum(12,BadIdArr4));
 	
 	int ZeroIdArr1[] = {0,1,2,3,4};
 	ASSERT_NO_THROW(Colosseum(5, ZeroIdArr1));
@@ -82,7 +82,7 @@ void testAddTrainingGroup() {
  * Output:        None.
  * Return Values: ALLOCATION_ERROR - In case of an allocation error.
  *                INVALID_INPUT - if gladiatorID <0, or trainingGroup<0, or
- *				  score<0, or score>100
+ *				  score<0
  *                FAILURE - If gladiatorID is already in the Colosseum,
  *				  or trainingGroup isn't in the Colosseum, or other error.
  *                SUCCESS - Otherwise.
@@ -91,9 +91,8 @@ void testAddTrainingGroup() {
 void testAddGladiator() {
 	Colosseum col(5,IdArr);
 	ASSERT_EQUALS(col.addGladiator(-1, 90, 3), INVALID_INPUT);
-	ASSERT_EQUALS(col.addGladiator(1337, 90, 0), INVALID_INPUT);
+	ASSERT_EQUALS(col.addGladiator(1337, 90, -10), INVALID_INPUT);
 	ASSERT_EQUALS(col.addGladiator(1337, -1, 5), INVALID_INPUT);
-	ASSERT_EQUALS(col.addGladiator(1337, 101, 5), INVALID_INPUT);
 	
 	ASSERT_EQUALS(col.addGladiator(10, 90, 2), SUCCESS);
 	ASSERT_EQUALS(col.addGladiator(0, 90, 3), SUCCESS);
@@ -182,6 +181,78 @@ void getMinTrainingGroup() {
 	ASSERT_EQUALS(ans, 2);
 }
 
+void testIn1() {
+//	init 3 1 3 5
+//	addGladiator 2 84 2
+//	addTrainingGroup 3
+//	addTrainingGroup -1
+//	addTrainingGroup 0
+//	addGladiator 100 20 0
+//	addGladiator 101 60 0
+//	addGladiator 110 90 1
+//	getMinTrainingGroup
+//	trainingGroupFight 0 1 2 2
+//	trainingGroupFight 0 1 2 1
+//	getMinTrainingGroup
+//	trainingGroupFight 0 1 2 1
+//	addGladiator 150 60 5
+//	addGladiator 151 30 5
+//	trainingGroupFight 5 1 2 1
+//	trainingGroupFight 3 5 2 1
+//	getMinTrainingGroup
+//	quit
+	int IdArr[] = {1,3,5};
+
+	Colosseum col(3,IdArr);
+	col.addGladiator(2, 84, 2);
+	col.addTrainingGroup(3);
+	col.addTrainingGroup(-1);
+	col.addTrainingGroup(0);
+	col.addGladiator(100, 20, 0);
+	col.addGladiator(101, 60, 0);
+	ASSERT_EQUALS(col.addGladiator(101, 60, 1),FAILURE);
+	col.addGladiator(110, 90, 1);
+	int ans = -1;
+	col.getMinTrainingGroup(&ans);
+	ASSERT_EQUALS(ans, 0);
+	
+	//group 0 - 20, 60
+	//group 1 - 90
+	
+	
+	//bad number of group 1 gladiators
+	ASSERT_EQUALS(col.trainingGroupFight(0, 1, 2, 2), FAILURE);
+	
+	
+	//group 0 looses
+	ASSERT_EQUALS(col.trainingGroupFight(0, 1, 2, 1), SUCCESS);
+	ans = -1;
+	col.getMinTrainingGroup(&ans);
+	ASSERT_EQUALS(ans, 1);
+	
+	
+	//try to fight with disquaified group
+	ASSERT_EQUALS(col.trainingGroupFight(0, 1, 2, 1),FAILURE);
+	
+	ASSERT_EQUALS(col.addGladiator(150, 60, 5),SUCCESS);
+	ASSERT_EQUALS(col.addGladiator(151, 30, 5),SUCCESS);
+	
+	//group 1 - 90
+	//group 5 - 30, 60
+
+	//tie - low id wins - 5 is disquaified
+	col.trainingGroupFight(5, 1, 2, 1);
+	
+	col.trainingGroupFight(3, 5, 2, 1);
+	ans = -1;
+	col.getMinTrainingGroup(&ans);
+	ASSERT_EQUALS(ans, 1);
+
+
+
+
+}
+
 int main() {
 	cout << "-------COLOSSEUM TESTS-----------" << endl;
 	RUN_TEST(testInit);
@@ -189,7 +260,7 @@ int main() {
 	RUN_TEST(testAddGladiator);
 	RUN_TEST(testTrainingGroupFight);
 	RUN_TEST(getMinTrainingGroup);
-	
+	RUN_TEST(testIn1);
 	return 0;
 }
 

@@ -1,6 +1,6 @@
 #include "Hash.hpp"
 
-Hash::Hash(int size) : size(size) {}
+Hash::Hash(int s) : size(2*s+1) {}
 
 void Hash::update() {
 	size = size*2 + 1;

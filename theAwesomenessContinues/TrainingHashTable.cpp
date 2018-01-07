@@ -13,8 +13,7 @@ void TrainingHashTable::TrainingGroup::addGladiator(int score) {
 
 
 bool TrainingHashTable::TrainingGroup::illegalK(int k) {
-	
-		return gladiatorTree.sumOfBestN(k) == -1;
+	return gladiatorTree.sumOfBestN(k) == -1;
 }
 
 int TrainingHashTable::TrainingGroup::power(int k) {
@@ -30,10 +29,15 @@ bool TrainingHashTable::TrainingGroup::inactive() {
 	return active == false;
 }
 
-bool TrainingHashTable::TrainingGroup::operator==(const TrainingGroup& other) {
-	return id == other.id;
+
+bool operator==(const TrainingHashTable::TrainingGroup& first,
+				const TrainingHashTable::TrainingGroup& second) {
+	return first.id == second.id;
 }
 
+void* TrainingHashTable::TrainingGroup::heapP() {
+	return minHeapP;
+}
 
 
 //---------------TrainingHashTable Public Functions-----------------------------------
@@ -56,6 +60,12 @@ bool TrainingHashTable::exists(int id) const {
 	return table.exists(&tempGroup, hashFunc(id));
 }
 
+bool TrainingHashTable::isInactive(int id)  {
+	return !exists(id) ||
+		   getGroup(id)->inactive();
+	
+}
+
 void TrainingHashTable::addGladiator(int score, int groupID) {
 	if (!exists(groupID)) return;
 	TrainingGroup* group = getGroup(groupID);
@@ -64,40 +74,44 @@ void TrainingHashTable::addGladiator(int score, int groupID) {
 }
 
 
-//returns id of team that lost or -1 if failure
-int TrainingHashTable::trainingGroupFight(int trainingGroup1, int trainingGroup2,
+//returns heap pointer of team that lost or -1 if failure
+void* TrainingHashTable::trainingGroupFight(int trainingGroup1, int trainingGroup2,
 										  int k1, int k2) {
 	
-	if (trainingGroup1 == trainingGroup2) return -1;
-	if (!exists(trainingGroup1) || !exists(trainingGroup2)) return -1;
+	if (trainingGroup1 == trainingGroup2) return NULL;
+	if (!exists(trainingGroup1) || !exists(trainingGroup2)) return NULL;
 	TrainingGroup* group1 = getGroup(trainingGroup1);
 	TrainingGroup* group2 = getGroup(trainingGroup2);
 	
 	
-	if (group1->inactive() || group2->inactive()) return -1;
-	if (group1->illegalK(k1) || group2->illegalK(k2)) return -1;
+	if (group1->inactive() || group2->inactive()) return NULL;
+	if (group1->illegalK(k1) || group2->illegalK(k2)) return NULL;
 	
 	int group1Power = group1->power(k1);
 	int group2Power = group2->power(k2);
 	
-	//if tie return lower id team
+	//if tie lower id wins - return higher id
 	if (group1Power == group2Power){
 		if (trainingGroup1 < trainingGroup2) {
-			group1->disqualify();
-			return trainingGroup1;
-		} else {
 			group2->disqualify();
-			return trainingGroup2;
+			return group2->heapP();
+		} else {
+			group1->disqualify();
+			return group1->heapP();
 		}
 	}
 	//return loosing team
 	if (trainingGroup1 < trainingGroup2) {
 		group1->disqualify();
-		return trainingGroup1;
+		return group1->heapP();
 	} else {
 		group2->disqualify();
-		return trainingGroup2;
+		return group2->heapP();
 	}
+}
+
+bool TrainingHashTable::illegalK(int groupID, int k){
+	return getGroup(groupID)->illegalK(k);
 }
 
 //-----------------private helper functions--------------------------

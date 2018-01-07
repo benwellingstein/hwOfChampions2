@@ -11,8 +11,15 @@
  *				  or other error
  * Complexity:	  O((n)), n - number of groups in Colosseum
  */
-Colosseum::Colosseum(int n, int * trainingGroupsIDs) {
-	
+Colosseum::Colosseum(int n, int* ID_Arr) {
+	if (n<2) throw badArgException();
+	for (int i =0; i < n; i++) {
+		if (ID_Arr[i] < 0) throw badArgException();
+	}
+	void** heapPtrs = new void*[n];
+	groupHeap = new MinHeap(n, ID_Arr, heapPtrs);
+	trainingTable = new TrainingHashTable(n, ID_Arr, heapPtrs);
+	gladiatorTree = new SplayTreeModified<int>(NULL);
 }
 
 /* Description:   Adds a new Training Group to the system.
@@ -27,6 +34,10 @@ Colosseum::Colosseum(int n, int * trainingGroupsIDs) {
  */
 StatusType Colosseum::addTrainingGroup(int trainingGroupID) {
 	if (trainingGroupID < 0) return INVALID_INPUT;
+	if (trainingTable->exists(trainingGroupID) ) return FAILURE;
+	
+	void* heapDataP = groupHeap->insert(trainingGroupID);
+	trainingTable->insert(trainingGroupID, heapDataP);
 	return SUCCESS;
 }
 
@@ -37,16 +48,20 @@ StatusType Colosseum::addTrainingGroup(int trainingGroupID) {
  * Output:        None.
  * Return Values: ALLOCATION_ERROR - In case of an allocation error.
  *                INVALID_INPUT - if gladiatorID <0, or trainingGroup<0, or
- *				  score<0, or score>100
+ *				  score<0
  *                FAILURE - If gladiatorID is already in the Colosseum,
  *				  or trainingGroup isn't in the Colosseum, or other error.
  *                SUCCESS - Otherwise.
  * Complexity:	  O(log(m)), m - number of gladiators in Colosseum
  */
 StatusType Colosseum::addGladiator(int gladiatorID,int score,int trainingGroup){
-	if (gladiatorID < 0 || trainingGroup < 0 ||
-		score < 0 || 100 < score) return INVALID_INPUT;
-	
+	if (gladiatorID < 0 || trainingGroup < 0 || score < 0)
+		return INVALID_INPUT;
+	if (gladiatorTree->exist(gladiatorID)) return FAILURE;
+	if (!trainingTable->exists(trainingGroup)) return FAILURE;
+
+	trainingTable->addGladiator(score, trainingGroup);
+	gladiatorTree->insert(gladiatorID);
 	return SUCCESS;
 }
 /* Description:   Simulates a training group battle
@@ -66,11 +81,20 @@ StatusType Colosseum::addGladiator(int gladiatorID,int score,int trainingGroup){
  * Complexity:	  O(log(n)+log(m)), m - number of gladiators in Colosseum
  * 								    n - number of trainingGroups in Colosseum
  */
-StatusType Colosseum::trainingGroupFight(int trainingGroup1, int trainingGroup2,
+StatusType Colosseum::trainingGroupFight(int ID1, int ID2,
 										 int k1, int k2) {
 	if (k1 <= 0 || k2<=0 ||
-		trainingGroup1 < 0 || trainingGroup2 < 0) return INVALID_INPUT;
+		ID1 < 0 || ID2 < 0) return INVALID_INPUT;
 	
+	//TODO -remove if not needed
+//	if (trainingTable->isInactive(ID1) ||
+//		trainingTable->isInactive(ID2) ||
+//		trainingTable->illegalK(ID1, k1) ||
+//		trainingTable->illegalK(ID2, k2)) return FAILURE;
+	void* loosingGroup = trainingTable->trainingGroupFight(ID1, ID2, k1, k2);
+	if (!loosingGroup) return FAILURE;
+	groupHeap->decKey(loosingGroup, -1);
+	groupHeap->delMin();
 	return SUCCESS;
 }
 
@@ -84,6 +108,7 @@ StatusType Colosseum::trainingGroupFight(int trainingGroup1, int trainingGroup2,
  */
 StatusType Colosseum::getMinTrainingGroup(int * trainingGroup){
 	if (!trainingGroup) return INVALID_INPUT;
+	*trainingGroup = groupHeap->findMin();
 	return SUCCESS;
 }
 

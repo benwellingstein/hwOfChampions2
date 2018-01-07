@@ -231,6 +231,7 @@ public:
 	}
 	
     int sumOfBestN(int numberOfNodes) {
+		if (!head) return -1;
         if( head->numOfNodes < numberOfNodes) return -1;
         if( head->numOfNodes == numberOfNodes) return head->sumOfNodes;
         Node* current = head;
