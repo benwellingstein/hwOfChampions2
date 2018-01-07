@@ -135,7 +135,7 @@ void testDelMin() {
 }
 
 
-int main() {
+int main2() {
 	cout << "-------MIN HEAP TESTS-----------" << endl;
 	RUN_TEST(testMakeHeap);
 	RUN_TEST(testSiftDown);

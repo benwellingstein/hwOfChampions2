@@ -10,34 +10,34 @@ using std::ostream;
 using std::endl;
 
 template <class T>
+
 class SplayTree {
 private:
 	struct Node {
-		Node(T* data, Node* father = NULL, Node* left = NULL, Node* right =
-			 NULL): data(data), father(father), lChild(left), rChild(right) {}
+		Node(int data, Node* father = NULL, Node* left = NULL, Node* right =
+             NULL): data(data), father(father), lChild(left), rChild(right), sumOfNodes(data), numOfNodes(1), repetitions(1) {}
 		
-		bool operator<(const Node& other) const {
-			return *data < *other.data;
-		}
-		
-		bool operator==(const Node& other) const {
-			return *data == *other.data;
-		}
-		
-		bool operator!=(const Node& other) const {
-			return !(this == other);
-		}
+        bool operator<(const Node& other) const;
+        bool operator==(const Node& other) const;
+        bool operator!=(const Node& other) const;
+        
+        int totalValue() {
+            return sumOfNodes;
+        }
 		
 		//helper print function for debugging
-		ostream& print(ostream& os) const {
-			os  << *data << " ";
+        ostream& print(ostream& os) const {
+			os  << data << " ";
 			return os;
 		}
 		
-		T* data;
+		int data;
 		Node* father;
 		Node* lChild;
 		Node* rChild;
+        int sumOfNodes;
+        int numOfNodes;
+        int repetitions;
 	};
 	
 	/*Each tree will keep a pointer to its head node and a pointer to the
@@ -47,9 +47,8 @@ private:
 	Node* top;
 	
 public:
-	SplayTree(Node* root = NULL): head(root), top(NULL) {}
-	
-	~SplayTree() {
+    SplayTree(Node* root = NULL): head(root), top(NULL) {}
+    ~SplayTree() {
 		inOrderRecDestroy(head);
 		head = NULL;
 		top = NULL;
@@ -57,70 +56,87 @@ public:
 	
 //------------------- Classic splay tree functions ------------------
 	
-	
-	//splay tree remove function
-	bool remove(const T& val) {
-		if(!exist(val)) return false;
-		splay(val);
-		if (!head->lChild && !head->rChild) {
-			delete head->data;
-			delete head;
-			head = NULL;
-			top = NULL;
-			return true;
-		}
-		if (!head->lChild) {
-			Node* oldHead = head;
-			head = head->rChild;
-			head->father = NULL;
-			delete oldHead->data;
-			delete oldHead;
-		} else
-			if (!head->rChild) {
-				Node* oldHead = head;
-				head = head->lChild;
-				head->father = NULL;
-				delete oldHead->data;
-				delete oldHead;
-			} else {
-				Node* lMax = findMax(head->lChild);
-				SplayTree tempTree(head->lChild);
-				
-				tempTree.head->father = NULL;
-				tempTree.splay(*(lMax->data));
-				Node* oldHead = head;
-				head = tempTree.head;
-				head->rChild = oldHead->rChild;
-				head->father = NULL;
-				delete oldHead->data;
-				delete oldHead;
-				head->rChild->father = head;
-				tempTree.head = NULL;
-			}
-		top = findMax(head);
-		return true;
-	}
+//
+//    //splay tree remove function
+//    bool remove(int val) {
+//        if(!exist(val)) return false;
+//        splay(val);
+//        if (!head->lChild && !head->rChild) {
+//            delete head->data;
+//            delete head;
+//            head = NULL;
+//            top = NULL;
+//            return true;
+//        }
+//        if (!head->lChild) {
+//            Node* oldHead = head;
+//            head = head->rChild;
+//            head->father = NULL;
+//            delete oldHead->data;
+//            delete oldHead;
+//        } else
+//            if (!head->rChild) {
+//                Node* oldHead = head;
+//                head = head->lChild;
+//                head->father = NULL;
+//                delete oldHead->data;
+//                delete oldHead;
+//            } else {
+//                Node* lMax = findMax(head->lChild);
+//                SplayTree tempTree(head->lChild);
+//
+//                tempTree.head->father = NULL;
+//                tempTree.splay(*(lMax->data));
+//                Node* oldHead = head;
+//                head = tempTree.head;
+//                head->rChild = oldHead->rChild;
+//                head->father = NULL;
+//                delete oldHead->data;
+//                delete oldHead;
+//                head->rChild->father = head;
+//                tempTree.head = NULL;
+//            }
+//        top = findMax(head);
+//        return true;
+//    }
 
 	//splay tree insert function
-	bool insert(T* val) {
-		Node* newNode = new Node(val);
+    bool insert(int val) {
 		if (!head) {
+            Node* newNode = new Node(val);
 			head = newNode;
 			top = head;
 			return true;
 		}
-		if(exist(*val)) return false;
-		find(*val);
-		if( *val < *(head->data) ) {
+        find(val);
+        if(head->data == val) {
+            head->repetitions += 1;
+            head->sumOfNodes += val;
+            head->numOfNodes += 1;
+            return true;
+        }
+		//if(exist(*val)) return false;
+        Node* newNode = new Node(val);
+		if( val < (head->data) ) {
 			Node* oldHead = head;
 			newNode->rChild = oldHead;
 			newNode->lChild = oldHead->lChild;
+
+            newNode->sumOfNodes = oldHead->sumOfNodes + val;
+            newNode->numOfNodes = oldHead->numOfNodes + 1;
+            oldHead->sumOfNodes = oldHead->data;
+            oldHead->numOfNodes = 1;
+
 			oldHead->father = newNode;
 			
-			if (oldHead->lChild) {
+			if(oldHead->lChild) {
 				oldHead->lChild->father = newNode;
 				oldHead->lChild = NULL;
 			}
+            if(oldHead->rChild) {
+                oldHead->sumOfNodes += oldHead->rChild->sumOfNodes;
+                oldHead->numOfNodes += oldHead->rChild->numOfNodes;
+            }
 			newNode->father = NULL;
 			head = newNode;
 			
@@ -129,20 +145,44 @@ public:
 			newNode->lChild = oldHead;
 			newNode->rChild = oldHead->rChild;
 			oldHead->father = newNode;
-			
+            newNode->numOfNodes = oldHead->numOfNodes + 1;
+            newNode->sumOfNodes = oldHead->sumOfNodes + val;
+            oldHead->sumOfNodes = oldHead->data;
+            oldHead->numOfNodes = 1;
+            
 			if (oldHead->rChild) {
+                //newNode->numOfNodes -= oldHead->rChild->numOfNodes;
+                //newNode->sumOfNodes -= oldHead->rChild->sumOfNodes;
+                
 				oldHead->rChild->father = newNode;
 				oldHead->rChild = NULL;
 			}
-			
+            if(oldHead->lChild) {
+                oldHead->sumOfNodes += oldHead->lChild->sumOfNodes;
+                oldHead->numOfNodes += oldHead->lChild->numOfNodes;
+            }
+            
 			head = newNode;
-			if (top && *(top->data) < *val) top = newNode;
+			if (top && (top->data) < val) top = newNode;
 			
 		}
 		
 		return true;
 	}
-	
+    
+    int totalNumberOfNodes() {
+        if (head==NULL) return 0;
+        return head->numOfNodes;
+    }
+    
+    int totalTreeValue() {
+        if (head==NULL) return -1;
+        return head->sumOfNodes;
+    }
+    
+    
+    
+    
    //splay tree find max function
 	static Node* findMax(Node* top) {
 		if(top == NULL) return NULL;
@@ -156,7 +196,7 @@ public:
 	}
 	
 	//splay tree find function
-	T* find(const T& val) {
+	int find(int val) {
 		if (!head)  return NULL;
 		Node* current = head;
 		Node* next = findNext(current, val);
@@ -164,7 +204,7 @@ public:
 			current = next;
 			next = findNext(current, val);
 		}
-		splay(*(current->data));
+		splay((current->data));
 		
 		if (next != NULL) {
 			return current->data;
@@ -173,14 +213,44 @@ public:
 		return NULL;
 	}
 	
+    int sumOfBestN(int numberOfNodes) {
+        if( head->numOfNodes < numberOfNodes) return -1;
+        if( head->numOfNodes == numberOfNodes) return head->sumOfNodes;
+        Node* current = head;
+        bool done = false;
+        int nodesLeft = numberOfNodes;
+        int sum = 0;
+        while (!done) {
+            if(current->rChild) {
+                if(current->rChild->numOfNodes > nodesLeft) {
+                    current = current->rChild;
+                    continue;
+                }
+                if(current->rChild->numOfNodes == nodesLeft) return current->rChild->sumOfNodes + sum;
+                if(current->rChild->numOfNodes >= nodesLeft - current->repetitions) return current->rChild->sumOfNodes + current->data * (nodesLeft - current->rChild->numOfNodes) + sum;
+                
+                sum += current->rChild->sumOfNodes + current->data * current->repetitions;
+                nodesLeft -= current->rChild->numOfNodes + current->rChild->repetitions;
+                current = current->lChild;
+                continue;
+            }
+            if(nodesLeft == 1) return current->data * current->repetitions + sum;
+
+            sum += current->data * current->repetitions;
+            nodesLeft -= current->repetitions;
+            current = current->lChild;
+        }
+        return 0;
+    }
+    
 	//splay function
-	void splay(const T& val) {
+	void splay(int val) {
 		if (!exist(val)) return;
 		Node* current = head;
 		Node* father = NULL;
 		Node* grandFather = NULL;
 		Node* greatGrandFather = NULL;
-		while( *(current->data) != val ) {
+		while( (current->data) != val ) {
 			greatGrandFather = grandFather;
 			grandFather = father;
 			father = current;
@@ -222,7 +292,7 @@ public:
 		}
 		//case2
 		if(head != current) {
-			if (*(father->data) < val)  {
+			if ((father->data) < val)  {
 				ZigR(&head, father, current);
 				return;
 			} else {
@@ -239,6 +309,7 @@ public:
 	 * the function will run on the data inside a node and _LIBCPP_INVOKE_RETURN
 	 * a boolean value to indicate if the data was treated
 	 */
+<<<<<<< HEAD:theAwesomenessContinues/SplayTreeModified.hpp
 //	void update(UpdateFunction updateFunction) {
 //		int arraySize = size();
 //		T** arrOriginal = new T*[arraySize + 1]();
@@ -266,14 +337,43 @@ public:
 //		delete [] arrFinal;
 //	}
 	
+=======
+/*	void update(UpdateFunction updateFunction) {
+		int arraySize = size();
+		T** arrOriginal = new T*[arraySize + 1]();
+		T** arrChanged = new T*[arraySize + 1]();
+		T** arrNotChanged = new T*[arraySize + 1]();
+		T** arrFinal = new T*[arraySize + 1]();
+		
+		for (int i = 0; i < arraySize; i++) {
+			arrOriginal[i] = NULL;
+			arrChanged[i] = NULL;
+			arrNotChanged[i] = NULL;
+			arrFinal[i] = NULL;
+		}
+		
+		getData(arrOriginal);
+		runFunction(arrOriginal, arrChanged, arrNotChanged, updateFunction);
+		mergeSortArrays(arrChanged, arrNotChanged, arrFinal);
+		inOrderRecDestroy(head);
+		head = NULL;
+		top = NULL;
+		buildTreeFromArray(head, arrFinal);
+		delete [] arrOriginal;
+		delete [] arrChanged;
+		delete [] arrNotChanged;
+		delete [] arrFinal;
+	}
+	*/
+>>>>>>> 9af416e11001ea07ac44cf637298fb31c63905c7:theAwesomenessContinues/SplayTree.hpp
 
 	// boolean exists function - searches branch for given value
-	bool exist(const T& val) const {
+	bool exist(int val) const {
 		if (!head) return false;
 		Node* currNode = head;
 		while (1) {
-			if ( (*(*currNode).data) == val ) return true;
-			if ( val< (*(*currNode).data)) {
+			if ( ((*currNode).data) == val ) return true;
+			if ( val< ((*currNode).data)) {
 				if ( (*currNode).lChild) {
 					currNode = currNode->lChild;
 				} else {
@@ -292,14 +392,14 @@ public:
 	/*New functionality of tree - top keeps the highest value in the tree
 	 *this function simply returns that value
 	 */
-	T* getTop() {
+	int getTop() {
 		if (!top) return NULL;
 		return top->data;
 	}
 	
 	
 	//used to return pointers to the values in the tree by array
-	void exportArr(T** arr) {
+	void exportArr(int* arr) {
 		int i = 0;
 		recursiveFill(arr, head, &i);
 	}
@@ -308,41 +408,6 @@ public:
 	//used to count number of nodes in tree
 	int size() {
 		return countNodes(head);
-	}
-	
-	
-	
-//	helper function for tests - helps insert values like a binary tree
-	bool insertBT(T* val) {
-		if (exist(*val)) return false;
-		if (!head) {
-            Node* newNode = new Node(val, NULL);
-			head=newNode;
-			return true;
-		} else {
-			Node* currNode = head;
-			while (1) {
-				if (*val < (*(*currNode).data)) {
-					if ((*currNode).lChild) {
-						currNode = currNode->lChild;
-					} else {
-                        Node* newNode = new Node(val, currNode);
-						(currNode->lChild = newNode);
-						return true;
-					}
-				} else {
-					if ((*currNode).rChild ) {
-						currNode = currNode->rChild;
-					} else {
-                        Node* newNode = new Node(val, currNode);
-						(currNode->rChild = newNode);
-						return true;
-					}
-				}
-			}
-		}
-		assert(false);
-		return false;
 	}
 
 
@@ -353,8 +418,6 @@ public:
 		postOrder(os);
 		return os;
 	}
-
-	
 
 
 private:
@@ -373,7 +436,7 @@ private:
 	
 	
 	//helper function for returning pointers to array
-	static void recursiveFill(T** arr, Node* node, int* i) {
+	static void recursiveFill(int* arr, Node* node, int* i) {
 		if (node) {
 			recursiveFill(arr, node->lChild, i);
 			//cout << *i << endl;
@@ -384,20 +447,21 @@ private:
 	}
 	
 	//helper functions to get NEW COPY of data
-	void getData(T** arrOriginal) {
+	void getData(int* arrOriginal) {
 		int i=0;
 		getDataRec(arrOriginal, head, &i);
 	}
-	static void getDataRec(T** arr, Node* node, int* i) {
+	static void getDataRec(int* arr, Node* node, int* i) {
 		if (node) {
 			getDataRec(arr, node->lChild, i);
-			arr[*i] = new T(*(node->data));
+			arr[*i] = ((node->data));
 			*i = *i + 1 ;
 			getDataRec(arr, node->rChild, i);
 		}
 	}
 	
 	//splits original into two arrays by update function
+<<<<<<< HEAD:theAwesomenessContinues/SplayTreeModified.hpp
 //	void runFunction(T** arrOriginal, T** arrChanged,T**  arrNotChanged,
 //					 UpdateFunction updateFunction) {
 //		int i = 0;
@@ -413,13 +477,30 @@ private:
 //		}
 //	}
 //
+=======
+/*	void runFunction(T** arrOriginal, T** arrChanged,T**  arrNotChanged,
+					 UpdateFunction updateFunction) {
+		int i = 0;
+		int j = 0;
+		for (int k = 0; arrOriginal[k] != NULL; ++k) {
+			if (updateFunction(*arrOriginal[k]))  {
+				arrChanged[i] = arrOriginal[k];
+				i++;
+			} else {
+				arrNotChanged[j] = arrOriginal[k];
+				j++;
+			}
+		}
+	}*/
+	
+>>>>>>> 9af416e11001ea07ac44cf637298fb31c63905c7:theAwesomenessContinues/SplayTree.hpp
 	//merges arrays
-	void mergeSortArrays(T** arrChanged, T** arrNotChanged, T** arrFinal) {
+	void mergeSortArrays(int* arrChanged, int* arrNotChanged, int* arrFinal) {
 		int i = 0;
 		int j = 0;
 		int k = 0;
 		while (arrChanged[i] && arrNotChanged[j]) {
-			if (*arrChanged[i]< * arrNotChanged[j]) {
+			if (arrChanged[i]<  arrNotChanged[j]) {
 				arrFinal[k] = arrChanged[i];
 				i++;
 			} else {
@@ -441,7 +522,7 @@ private:
 	}
 
 	//inserts all values of array into tree
-	void buildTreeFromArray(Node* head, T** arrFinal) {
+	void buildTreeFromArray(Node* head, int* arrFinal) {
 		for (int i = 0; arrFinal[i]; ++i ) {
 			insert(arrFinal[i]);
 		}
@@ -453,7 +534,7 @@ private:
 		if (node) {
 			inOrderRecDestroy(node->lChild);
 			inOrderRecDestroy(node->rChild);
-			delete node->data;
+//            delete node->data;
 			delete node;
 		}
 	}
@@ -462,16 +543,16 @@ private:
 
 	
 	//Helps to get the next node in searches - returns same/left/right node
-	Node* findNext(Node* checkAgainst, const T& val) const {
-		if (*(checkAgainst->data)< val)  	return checkAgainst->rChild;
-		if (val < *(checkAgainst->data)) 	return checkAgainst->lChild;
-		if (val == *(checkAgainst->data)) 	return checkAgainst;
+	Node* findNext(Node* checkAgainst, int val) const {
+		if ((checkAgainst->data)< val)  	return checkAgainst->rChild;
+		if (val < (checkAgainst->data)) 	return checkAgainst->lChild;
+		if (val == (checkAgainst->data)) 	return checkAgainst;
 		assert(false);
 		return NULL;
 	}
 	
 	Node** findDirection(Node* grandFather, Node* father){
-		if (*(grandFather->data) < *(father->data)) {
+		if ((grandFather->data) < (father->data)) {
 			return &(grandFather->rChild);
 		} else {
 			return &(grandFather->lChild);
@@ -483,25 +564,97 @@ private:
 	//--------splay tree helper functions----------
 	
 	static void ZigL(Node** grandFather, Node* father, Node* child) {
+        child->sumOfNodes = father->sumOfNodes;
+        child->numOfNodes = father->numOfNodes;
+        father->sumOfNodes = father->data * father->repetitions;
+        father->numOfNodes = father->repetitions;
+        
+        if (father->rChild) {
+            father->sumOfNodes += father->rChild->sumOfNodes;
+            father->numOfNodes += father->rChild->numOfNodes;
+        }
+        
+        if (child->rChild) {
+            father->sumOfNodes += child->rChild->sumOfNodes;
+            father->numOfNodes += child->rChild->numOfNodes;
+        }
+        
 		*grandFather = child;
 		father->lChild = child->rChild;
 		child->rChild = father;
         child->father = NULL;
         father->father = child;
-		if (father->lChild) father->lChild->father = father;
+
+
+
+        if (father->lChild) {
+            father->lChild->father = father;
+        }
+
 	}
 	
 	static void ZigR(Node** grandFather, Node* father, Node* child ) {
+        child->sumOfNodes = father->sumOfNodes;
+        child->numOfNodes = father->numOfNodes;
+        father->sumOfNodes = father->data * father->repetitions;
+        father->numOfNodes = father->repetitions;
+        
+        if (father->lChild) {
+            father->sumOfNodes += father->lChild->sumOfNodes;
+            father->numOfNodes += father->lChild->numOfNodes;
+        }
+        
+        if (child->lChild) {
+            father->sumOfNodes += child->lChild->sumOfNodes;
+            father->numOfNodes += child->lChild->numOfNodes;
+        }
+        
 		*grandFather = child;
 		father->rChild = child->lChild;
 		child->lChild = father;
         child->father = NULL;
         father->father = child;
-		if (father->rChild) father->rChild->father = father;
+
+        if (father->rChild) {
+            father->rChild->father = father;
+        }
+        
+
 	}
 	
 	static void ZigZagLR(Node** greatGrandFather, Node* grandFather,
 						 Node* father, Node* child) {
+        int totalSum = grandFather->sumOfNodes;
+        int totalNum = grandFather->numOfNodes;
+        
+        grandFather->sumOfNodes = grandFather->data * grandFather->repetitions;
+        grandFather->numOfNodes = grandFather->repetitions;
+        
+        if(grandFather->rChild) {
+            grandFather->sumOfNodes += grandFather->rChild->sumOfNodes;
+            grandFather->numOfNodes += grandFather->rChild->numOfNodes;
+        }
+        if(child->rChild) {
+            grandFather->sumOfNodes += child->rChild->sumOfNodes;
+            grandFather->numOfNodes += child->rChild->numOfNodes;
+        }
+        
+        father->sumOfNodes = father->data * father->repetitions;
+        father->numOfNodes = father->repetitions;
+        
+        if(father->lChild) {
+            father->sumOfNodes += father->lChild->sumOfNodes;
+            father->numOfNodes += father->lChild->numOfNodes;
+        }
+        if(child->lChild) {
+            father->sumOfNodes += child->lChild->sumOfNodes;
+            father->numOfNodes += child->lChild->numOfNodes;
+        }
+        
+        child->sumOfNodes = totalSum;
+        child->numOfNodes = totalNum;
+        
+        
 		*greatGrandFather = child;
 		father->rChild = child->lChild;
 		grandFather->lChild = child->rChild;
@@ -516,6 +669,36 @@ private:
 
 	static void ZigZagRL(Node** greatGrandFather, Node* grandFather,
 						 Node* father, Node* child) {
+        int totalSum = grandFather->sumOfNodes;
+        int totalNum = grandFather->numOfNodes;
+        
+        grandFather->sumOfNodes = grandFather->data * grandFather->repetitions;
+        grandFather->numOfNodes = grandFather->repetitions;
+        
+        if(grandFather->lChild) {
+            grandFather->sumOfNodes += grandFather->lChild->sumOfNodes;
+            grandFather->numOfNodes += grandFather->lChild->numOfNodes;
+        }
+        if(child->lChild) {
+            grandFather->sumOfNodes += child->lChild->sumOfNodes;
+            grandFather->numOfNodes += child->lChild->numOfNodes;
+        }
+        
+        father->sumOfNodes = father->data * father->repetitions;
+        father->numOfNodes = father->repetitions;
+        
+        if(father->rChild) {
+            father->sumOfNodes += father->rChild->sumOfNodes;
+            father->numOfNodes += father->rChild->numOfNodes;
+        }
+        if(child->rChild) {
+            father->sumOfNodes += child->rChild->sumOfNodes;
+            father->numOfNodes += child->rChild->numOfNodes;
+        }
+
+        child->sumOfNodes = totalSum;
+        child->numOfNodes = totalNum;
+        
 		*greatGrandFather = child;
 		father->lChild = child->rChild;
 		grandFather->rChild = child->lChild;
@@ -530,6 +713,33 @@ private:
 
 	static void ZigZigRR(Node** greatGrandFather, Node* grandFather,
 						  Node* father, Node* child) {
+        int totalSum = grandFather->sumOfNodes;
+        int totalNum = grandFather->numOfNodes;
+        
+        grandFather->sumOfNodes = grandFather->data * grandFather->repetitions;
+        grandFather->numOfNodes = grandFather->repetitions;
+        
+        if(father->lChild) {
+            grandFather->sumOfNodes += father->lChild->sumOfNodes;
+            grandFather->numOfNodes += father->lChild->numOfNodes;
+        }
+        
+        if(grandFather->lChild) {
+            grandFather->sumOfNodes += grandFather->lChild->sumOfNodes;
+            grandFather->numOfNodes += grandFather->lChild->numOfNodes;
+        }
+        
+        father->sumOfNodes = father->data * father->repetitions + grandFather->sumOfNodes;
+        father->numOfNodes = father->repetitions + grandFather->numOfNodes;
+        
+        if(child->lChild) {
+            father->sumOfNodes += child->lChild->sumOfNodes;
+            father->numOfNodes += child->lChild->numOfNodes;
+        }
+        
+        child->sumOfNodes = totalSum;
+        child->numOfNodes = totalNum;
+        
 		*greatGrandFather = child;
 		grandFather->rChild = father->lChild;
 		father->rChild = child->lChild;
@@ -546,6 +756,33 @@ private:
 	
 	static void ZigZigLL(Node** greatGrandFather, Node* grandFather,
 						  Node* father, Node* child) {
+        int totalSum = grandFather->sumOfNodes;
+        int totalNum = grandFather->numOfNodes;
+        
+        grandFather->sumOfNodes = grandFather->data * grandFather->repetitions;
+        grandFather->numOfNodes = grandFather->repetitions;
+        
+        if(father->rChild) {
+            grandFather->sumOfNodes += father->rChild->sumOfNodes;
+            grandFather->numOfNodes += father->rChild->numOfNodes;
+        }
+        
+        if(grandFather->rChild) {
+            grandFather->sumOfNodes += grandFather->rChild->sumOfNodes;
+            grandFather->numOfNodes += grandFather->rChild->numOfNodes;
+        }
+        
+        father->sumOfNodes = father->data * father->repetitions + grandFather->sumOfNodes;
+        father->numOfNodes = father->repetitions + grandFather->numOfNodes;
+        
+        if(child->rChild) {
+            father->sumOfNodes += child->rChild->sumOfNodes;
+            father->numOfNodes += child->rChild->numOfNodes;
+        }
+        
+        child->sumOfNodes = totalSum;
+        child->numOfNodes = totalNum;
+        
 		*greatGrandFather = child;
 		father->lChild = child->rChild;
 		child->rChild = father;
@@ -562,14 +799,14 @@ private:
 	enum Order { LL, LR, RL, RR} ;
 	
 	static Order findOrder(Node* grandFather, Node* father, Node* current) {
-		if (*(grandFather->data) < *(father->data) ) {
-			if (*(current->data) < *(father->data) ) {
+		if ((grandFather->data) < (father->data) ) {
+			if ((current->data) < (father->data) ) {
 				return RL;
 			} else {
 				return RR;
 			}
 		} else {
-			if (*(current->data) < *(father->data)) {
+			if ((current->data) < (father->data)) {
 				return LL;
 			}else {
 				return LR;
