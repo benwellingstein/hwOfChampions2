@@ -1,22 +1,14 @@
-//
-//  TrainingHashTable.hpp
-//  theAwesomenessContinues
-//
-//  Created by Ben on 03/01/2018.
-//  Copyright © 2018 Ben. All rights reserved.
-//
-
 #ifndef TrainingHashTable_hpp
 #define TrainingHashTable_hpp
 #include <stdio.h>
-#include "Hash.hpp"
 #include "DynamicArray.hpp"
+#include "Hash.hpp"
 
 
 
 
 class TrainingHashTable {
-	
+public:
 	TrainingHashTable(int n, int* idArr, void** pArr);
 	void insert(int id, void* heapP);
 	bool exists(int id) const;
@@ -36,16 +28,20 @@ private:
 		bool inactive();
 		int power(int k);
 		void disqualify();
+		bool operator==(const TrainingGroup& other);
 	private:
 		int id;
 		void* minHeapP;
 		bool active;
 		int gladiatorTree;
 	};
+
+	
+	TrainingGroup* getGroup(int id);
+	
 	
 	Hash hashFunc;
 	DynamicArray<TrainingGroup> table;
-	TrainingGroup* getGroup(int id);
 	
 };
 

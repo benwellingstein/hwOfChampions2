@@ -1,10 +1,3 @@
-//
-//  TrainingHashTable.cpp
-//  theAwesomenessContinues
-//
-//  Created by Ben on 03/01/2018.
-//  Copyright © 2018 Ben. All rights reserved.
-//
 
 #include "TrainingHashTable.hpp"
 
@@ -23,9 +16,7 @@ bool TrainingHashTable::TrainingGroup::illegalK(int k) {
 	//TODO connect - change lines
 //	return gladiatorTree.size() < k;
 		return gladiatorTree < k;
-
 }
-
 
 int TrainingHashTable::TrainingGroup::power(int k) {
 	//TODO connect - change lines
@@ -41,11 +32,16 @@ bool TrainingHashTable::TrainingGroup::inactive() {
 	return active == false;
 }
 
+bool TrainingHashTable::TrainingGroup::operator==(const TrainingGroup& other) {
+	return id == other.id;
+}
+
+
 
 //---------------TrainingHashTable Public Functions-----------------------------------
 
 TrainingHashTable::TrainingHashTable(int n, int* idArr, void** pArr) :
-													hashFunc(n), table() {
+													hashFunc(n), table(n) {
 	for (int i = 0; i < n ; ++i) {
 		TrainingGroup* newGroup = new TrainingGroup(idArr[i], pArr[i], true);
 		table.insert(newGroup, hashFunc(idArr[i]));
@@ -54,7 +50,7 @@ TrainingHashTable::TrainingHashTable(int n, int* idArr, void** pArr) :
 void TrainingHashTable::insert(int id, void* heapP) {
 	if (exists(id)) return;
 	TrainingGroup* newGroup = new TrainingGroup(id, heapP, true);
-	table.insert(newGroup,hashFunc(id));
+	if (table.insert(newGroup,hashFunc(id))) hashFunc.update();
 }
 
 bool TrainingHashTable::exists(int id) const {

@@ -6,7 +6,7 @@
 class Hash {
 public:
 	explicit Hash(int size);
-	void update(int newSize);
+	void update();
 	int operator()(int input) const;
 	
 private:

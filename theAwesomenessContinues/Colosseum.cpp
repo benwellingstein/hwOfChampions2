@@ -11,7 +11,9 @@
  *				  or other error
  * Complexity:	  O((n)), n - number of groups in Colosseum
  */
-Colosseum::Colosseum(int n, int * trainingGroupsIDs) {}
+Colosseum::Colosseum(int n, int * trainingGroupsIDs) {
+	
+}
 
 /* Description:   Adds a new Training Group to the system.
  * Input:		  trainingGroupID - ID of the trainer Group to add.

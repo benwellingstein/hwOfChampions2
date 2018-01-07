@@ -2,11 +2,11 @@
 
 Hash::Hash(int size) : size(size) {}
 
-void Hash::update(int newSize) {
-	size = newSize;
+void Hash::update() {
+	size = size*2 + 1;
 }
 
 int Hash::operator()(int input) const {
-	return input & size;
+	return input % size;
 }
 

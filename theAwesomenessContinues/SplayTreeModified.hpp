@@ -9,7 +9,7 @@ using std::cout;
 using std::ostream;
 using std::endl;
 
-template <class T, class UpdateFunction>
+template <class T>
 class SplayTree {
 private:
 	struct Node {
@@ -239,32 +239,32 @@ public:
 	 * the function will run on the data inside a node and _LIBCPP_INVOKE_RETURN
 	 * a boolean value to indicate if the data was treated
 	 */
-	void update(UpdateFunction updateFunction) {
-		int arraySize = size();
-		T** arrOriginal = new T*[arraySize + 1]();
-		T** arrChanged = new T*[arraySize + 1]();
-		T** arrNotChanged = new T*[arraySize + 1]();
-		T** arrFinal = new T*[arraySize + 1]();
-		
-		for (int i = 0; i < arraySize; i++) {
-			arrOriginal[i] = NULL;
-			arrChanged[i] = NULL;
-			arrNotChanged[i] = NULL;
-			arrFinal[i] = NULL;
-		}
-		
-		getData(arrOriginal);
-		runFunction(arrOriginal, arrChanged, arrNotChanged, updateFunction);
-		mergeSortArrays(arrChanged, arrNotChanged, arrFinal);
-		inOrderRecDestroy(head);
-		head = NULL;
-		top = NULL;
-		buildTreeFromArray(head, arrFinal);
-		delete [] arrOriginal;
-		delete [] arrChanged;
-		delete [] arrNotChanged;
-		delete [] arrFinal;
-	}
+//	void update(UpdateFunction updateFunction) {
+//		int arraySize = size();
+//		T** arrOriginal = new T*[arraySize + 1]();
+//		T** arrChanged = new T*[arraySize + 1]();
+//		T** arrNotChanged = new T*[arraySize + 1]();
+//		T** arrFinal = new T*[arraySize + 1]();
+//		
+//		for (int i = 0; i < arraySize; i++) {
+//			arrOriginal[i] = NULL;
+//			arrChanged[i] = NULL;
+//			arrNotChanged[i] = NULL;
+//			arrFinal[i] = NULL;
+//		}
+//		
+//		getData(arrOriginal);
+//		runFunction(arrOriginal, arrChanged, arrNotChanged, updateFunction);
+//		mergeSortArrays(arrChanged, arrNotChanged, arrFinal);
+//		inOrderRecDestroy(head);
+//		head = NULL;
+//		top = NULL;
+//		buildTreeFromArray(head, arrFinal);
+//		delete [] arrOriginal;
+//		delete [] arrChanged;
+//		delete [] arrNotChanged;
+//		delete [] arrFinal;
+//	}
 	
 
 	// boolean exists function - searches branch for given value
@@ -398,21 +398,21 @@ private:
 	}
 	
 	//splits original into two arrays by update function
-	void runFunction(T** arrOriginal, T** arrChanged,T**  arrNotChanged,
-					 UpdateFunction updateFunction) {
-		int i = 0;
-		int j = 0;
-		for (int k = 0; arrOriginal[k] != NULL; ++k) {
-			if (updateFunction(*arrOriginal[k]))  {
-				arrChanged[i] = arrOriginal[k];
-				i++;
-			} else {
-				arrNotChanged[j] = arrOriginal[k];
-				j++;
-			}
-		}
-	}
-	
+//	void runFunction(T** arrOriginal, T** arrChanged,T**  arrNotChanged,
+//					 UpdateFunction updateFunction) {
+//		int i = 0;
+//		int j = 0;
+//		for (int k = 0; arrOriginal[k] != NULL; ++k) {
+//			if (updateFunction(*arrOriginal[k]))  {
+//				arrChanged[i] = arrOriginal[k];
+//				i++;
+//			} else {
+//				arrNotChanged[j] = arrOriginal[k];
+//				j++;
+//			}
+//		}
+//	}
+//
 	//merges arrays
 	void mergeSortArrays(T** arrChanged, T** arrNotChanged, T** arrFinal) {
 		int i = 0;
