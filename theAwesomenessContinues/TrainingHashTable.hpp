@@ -30,21 +30,29 @@ private:
 		int power(int k);
 		void disqualify();
 		void* heapP();
-		bool operator==(const TrainingGroup& other);
+		friend TrainingHashTable;
+		friend bool operator==(const TrainingGroup& first,
+							   const TrainingGroup& second);
 	private:
 		int id;
 		void* minHeapP;
 		bool active;
 		SplayTree gladiatorTree;
+		
 	};
-
+	
 	
 	TrainingGroup* getGroup(int id);
-	
+
 	
 	Hash hashFunc;
 	DynamicArray<TrainingGroup> table;
-	
+
+public:
+	friend bool operator==(const TrainingGroup& first,
+						   const TrainingGroup& second);
 };
+
+
 
 #endif /* TrainingHashTable_hpp */

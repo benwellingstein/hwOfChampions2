@@ -36,7 +36,7 @@ public:
 	bool exists(const T* group, int i) const{
 		node* currNode = arr[i];
 		while (currNode) {
-			if (currNode->data == group) return true;
+			if (*currNode->data == *group) return true;
 			currNode = currNode->next;
 		}
 		return false;
@@ -46,7 +46,7 @@ public:
 		if (!exists(group, i)) return NULL;
 		node* currNode = arr[i];
 		while (currNode) {
-			if (currNode->data == group) return currNode->data;
+			if (*currNode->data == *group) return currNode->data;
 			currNode = currNode->next;
 		}
 		assert(false);

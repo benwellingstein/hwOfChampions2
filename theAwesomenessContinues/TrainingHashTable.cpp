@@ -13,8 +13,7 @@ void TrainingHashTable::TrainingGroup::addGladiator(int score) {
 
 
 bool TrainingHashTable::TrainingGroup::illegalK(int k) {
-	
-		return gladiatorTree.sumOfBestN(k) == -1;
+	return gladiatorTree.sumOfBestN(k) == -1;
 }
 
 int TrainingHashTable::TrainingGroup::power(int k) {
@@ -30,8 +29,10 @@ bool TrainingHashTable::TrainingGroup::inactive() {
 	return active == false;
 }
 
-bool TrainingHashTable::TrainingGroup::operator==(const TrainingGroup& other) {
-	return id == other.id;
+
+bool operator==(const TrainingHashTable::TrainingGroup& first,
+				const TrainingHashTable::TrainingGroup& second) {
+	return first.id == second.id;
 }
 
 void* TrainingHashTable::TrainingGroup::heapP() {
@@ -60,7 +61,7 @@ bool TrainingHashTable::exists(int id) const {
 }
 
 bool TrainingHashTable::isInactive(int id)  {
-	return exists(id) &&
+	return !exists(id) ||
 		   getGroup(id)->inactive();
 	
 }

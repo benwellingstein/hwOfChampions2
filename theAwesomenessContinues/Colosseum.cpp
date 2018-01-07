@@ -60,7 +60,7 @@ StatusType Colosseum::addGladiator(int gladiatorID,int score,int trainingGroup){
 	if (!trainingTable->exists(trainingGroup)) return FAILURE;
 
 	trainingTable->addGladiator(score, trainingGroup);
-	
+	gladiatorTree->insert(gladiatorID);
 	return SUCCESS;
 }
 /* Description:   Simulates a training group battle

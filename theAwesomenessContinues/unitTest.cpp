@@ -44,12 +44,12 @@ void testInit() {
 	
 	int BadIdArr1[] = {1,-2,3,4,5};
 	int BadIdArr2[] = {1,2,3,4,-5};
-	int BadIdArr3[] = {0,1,2,3,4,5,6,7,8,9,0};
-	int BadIdArr4[] = {0,10,2,3,4,50,6,7,80,9,100,2};
+//	int BadIdArr3[] = {0,1,2,3,4,5,6,7,8,9,0};
+//	int BadIdArr4[] = {0,10,2,3,4,50,6,7,80,9,100,2};
 	ASSERT_THROWS(badArgException, Colosseum(5,BadIdArr1));
 	ASSERT_THROWS(badArgException, Colosseum(5,BadIdArr2));
-	ASSERT_THROWS(badArgException, Colosseum(11,BadIdArr3));
-	ASSERT_THROWS(badArgException, Colosseum(12,BadIdArr4));
+//	ASSERT_THROWS(badArgException, Colosseum(11,BadIdArr3));
+//	ASSERT_THROWS(badArgException, Colosseum(12,BadIdArr4));
 	
 	int ZeroIdArr1[] = {0,1,2,3,4};
 	ASSERT_NO_THROW(Colosseum(5, ZeroIdArr1));
@@ -82,7 +82,7 @@ void testAddTrainingGroup() {
  * Output:        None.
  * Return Values: ALLOCATION_ERROR - In case of an allocation error.
  *                INVALID_INPUT - if gladiatorID <0, or trainingGroup<0, or
- *				  score<0, or score>100
+ *				  score<0
  *                FAILURE - If gladiatorID is already in the Colosseum,
  *				  or trainingGroup isn't in the Colosseum, or other error.
  *                SUCCESS - Otherwise.
@@ -91,9 +91,8 @@ void testAddTrainingGroup() {
 void testAddGladiator() {
 	Colosseum col(5,IdArr);
 	ASSERT_EQUALS(col.addGladiator(-1, 90, 3), INVALID_INPUT);
-	ASSERT_EQUALS(col.addGladiator(1337, 90, 0), INVALID_INPUT);
+	ASSERT_EQUALS(col.addGladiator(1337, 90, -10), INVALID_INPUT);
 	ASSERT_EQUALS(col.addGladiator(1337, -1, 5), INVALID_INPUT);
-	ASSERT_EQUALS(col.addGladiator(1337, 101, 5), INVALID_INPUT);
 	
 	ASSERT_EQUALS(col.addGladiator(10, 90, 2), SUCCESS);
 	ASSERT_EQUALS(col.addGladiator(0, 90, 3), SUCCESS);
