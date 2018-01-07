@@ -9,7 +9,6 @@ using std::cout;
 using std::ostream;
 using std::endl;
 
-template <class T>
 
 class SplayTree {
 private:
@@ -17,10 +16,22 @@ private:
 		Node(int data, Node* father = NULL, Node* left = NULL, Node* right =
              NULL): data(data), father(father), lChild(left), rChild(right), sumOfNodes(data), numOfNodes(1), repetitions(1) {}
 		
-        bool operator<(const Node& other) const;
-        bool operator==(const Node& other) const;
-        bool operator!=(const Node& other) const;
-        
+		
+		bool operator<(const Node& other) const {
+			return data < other.data;
+		}
+		
+		bool operator==(const Node& other) const {
+			return data == other.data;
+		}
+		
+		bool operator!=(const Node& other) const {
+			return !(*this == other);
+		}
+		
+
+		
+		
         int totalValue() {
             return sumOfNodes;
         }
@@ -309,7 +320,6 @@ public:
 	 * the function will run on the data inside a node and _LIBCPP_INVOKE_RETURN
 	 * a boolean value to indicate if the data was treated
 	 */
-<<<<<<< HEAD:theAwesomenessContinues/SplayTreeModified.hpp
 //	void update(UpdateFunction updateFunction) {
 //		int arraySize = size();
 //		T** arrOriginal = new T*[arraySize + 1]();
@@ -337,7 +347,6 @@ public:
 //		delete [] arrFinal;
 //	}
 	
-=======
 /*	void update(UpdateFunction updateFunction) {
 		int arraySize = size();
 		T** arrOriginal = new T*[arraySize + 1]();
@@ -365,7 +374,6 @@ public:
 		delete [] arrFinal;
 	}
 	*/
->>>>>>> 9af416e11001ea07ac44cf637298fb31c63905c7:theAwesomenessContinues/SplayTree.hpp
 
 	// boolean exists function - searches branch for given value
 	bool exist(int val) const {
@@ -461,7 +469,6 @@ private:
 	}
 	
 	//splits original into two arrays by update function
-<<<<<<< HEAD:theAwesomenessContinues/SplayTreeModified.hpp
 //	void runFunction(T** arrOriginal, T** arrChanged,T**  arrNotChanged,
 //					 UpdateFunction updateFunction) {
 //		int i = 0;
@@ -477,7 +484,6 @@ private:
 //		}
 //	}
 //
-=======
 /*	void runFunction(T** arrOriginal, T** arrChanged,T**  arrNotChanged,
 					 UpdateFunction updateFunction) {
 		int i = 0;
@@ -493,7 +499,6 @@ private:
 		}
 	}*/
 	
->>>>>>> 9af416e11001ea07ac44cf637298fb31c63905c7:theAwesomenessContinues/SplayTree.hpp
 	//merges arrays
 	void mergeSortArrays(int* arrChanged, int* arrNotChanged, int* arrFinal) {
 		int i = 0;
