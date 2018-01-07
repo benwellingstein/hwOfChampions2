@@ -7,8 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B586605020023E9000084F05 /* unitTestSplayTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF92224F1FFFBDCA00FA55CB /* unitTestSplayTree.cpp */; };
-		B586605120023E9000084F05 /* SplayTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5491ED61FF397C5003FD3CF /* SplayTree.cpp */; };
+		B58660562002402E00084F05 /* TrainingHashTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5C8F5431FFD3A5E00458B2F /* TrainingHashTable.cpp */; };
+		B58660572002402E00084F05 /* unitTestHashTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5C8F54F1FFD5CF300458B2F /* unitTestHashTable.cpp */; };
+		B58660582002402E00084F05 /* DynamicArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5C8F54B1FFD46A500458B2F /* DynamicArray.cpp */; };
+		B58660592002402E00084F05 /* Hash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5C8F5471FFD442100458B2F /* Hash.cpp */; };
+		B586605A2002403E00084F05 /* SplayTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5491ED61FF397C5003FD3CF /* SplayTree.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -86,7 +89,6 @@
 				B5C8F5461FFD3A6500458B2F /* TrainingHashTable */,
 				B5C8F52D1FF5515300458B2F /* MinHeap */,
 				B5491EE01FF398EF003FD3CF /* Colosseum */,
-				B5491EDA1FF397E5003FD3CF /* Splay Tree */,
 				B5C8F5261FF540F800458B2F /* Histogram */,
 				B5491ED91FF397CE003FD3CF /* misc */,
 			);
@@ -147,6 +149,7 @@
 				B5C8F5441FFD3A5E00458B2F /* TrainingHashTable.hpp */,
 				B5C8F5431FFD3A5E00458B2F /* TrainingHashTable.cpp */,
 				B5C8F54F1FFD5CF300458B2F /* unitTestHashTable.cpp */,
+				B5491EDA1FF397E5003FD3CF /* Splay Tree */,
 				B5C8F54E1FFD46A800458B2F /* DynamicArray */,
 				B5C8F54A1FFD442900458B2F /* Hash */,
 			);
@@ -228,8 +231,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B586605020023E9000084F05 /* unitTestSplayTree.cpp in Sources */,
-				B586605120023E9000084F05 /* SplayTree.cpp in Sources */,
+				B586605A2002403E00084F05 /* SplayTree.cpp in Sources */,
+				B58660562002402E00084F05 /* TrainingHashTable.cpp in Sources */,
+				B58660572002402E00084F05 /* unitTestHashTable.cpp in Sources */,
+				B58660582002402E00084F05 /* DynamicArray.cpp in Sources */,
+				B58660592002402E00084F05 /* Hash.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include "DynamicArray.hpp"
 #include "Hash.hpp"
-
+#include "SplayTree.hpp"
 
 
 
@@ -33,7 +33,7 @@ private:
 		int id;
 		void* minHeapP;
 		bool active;
-		int gladiatorTree;
+		SplayTree gladiatorTree;
 	};
 
 	

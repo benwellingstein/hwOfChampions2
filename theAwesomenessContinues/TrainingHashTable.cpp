@@ -8,20 +8,18 @@ TrainingHashTable::TrainingGroup::TrainingGroup(int id, void* minHeapP,
 					id(id),minHeapP(minHeapP), active(true), gladiatorTree() {}
 
 void TrainingHashTable::TrainingGroup::addGladiator(int score) {
-	gladiatorTree ++;
+	gladiatorTree.insert(score);
 }
 
 
 bool TrainingHashTable::TrainingGroup::illegalK(int k) {
-	//TODO connect - change lines
-//	return gladiatorTree.size() < k;
-		return gladiatorTree < k;
+	
+		return gladiatorTree.sumOfBestN(k) == -1;
 }
 
 int TrainingHashTable::TrainingGroup::power(int k) {
-	//TODO connect - change lines
-//	return gladiatorTree.findPower(k);
-	return gladiatorTree;
+
+	return gladiatorTree.sumOfBestN(k);
 }
 
 void TrainingHashTable::TrainingGroup::disqualify() {
