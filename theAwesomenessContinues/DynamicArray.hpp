@@ -67,6 +67,8 @@ private:
 	
 		int newSize = size*2+1;
 		node** newArr = new node*[newSize];
+		
+		
 		//copy old
 		for (int i=0; i < size; ++i) {
 			newArr[i] = arr[i];

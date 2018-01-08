@@ -101,7 +101,7 @@ void* TrainingHashTable::trainingGroupFight(int trainingGroup1, int trainingGrou
 		}
 	}
 	//return loosing team
-	if (trainingGroup1 < trainingGroup2) {
+	if (group1Power < group2Power) {
 		group1->disqualify();
 		return group1->heapP();
 	} else {
