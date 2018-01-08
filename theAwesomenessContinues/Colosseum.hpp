@@ -6,7 +6,7 @@
 #include "library2.h"
 #include "TrainingHashTable.hpp"
 #include "MinHeap.hpp"
-#include "SplayTreeModified.hpp"
+#include "SplayTree.hpp"
 
 class badArgException : public std::exception {};
 

@@ -8,17 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		AFC9213F200242D9000AE8F6 /* unitTestSplayTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AF92224F1FFFBDCA00FA55CB /* unitTestSplayTree.cpp */; };
-		B58660562002402E00084F05 /* TrainingHashTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5C8F5431FFD3A5E00458B2F /* TrainingHashTable.cpp */; };
-<<<<<<< HEAD
-		B58660582002402E00084F05 /* DynamicArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5C8F54B1FFD46A500458B2F /* DynamicArray.cpp */; };
-=======
->>>>>>> 5988cce6d7109bc02a7184c14aeb56cb79ee18f7
-		B58660592002402E00084F05 /* Hash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5C8F5471FFD442100458B2F /* Hash.cpp */; };
 		B586605A2002403E00084F05 /* SplayTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5491ED61FF397C5003FD3CF /* SplayTree.cpp */; };
-		B586605E2002430400084F05 /* MinHeap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5C8F52A1FF5514E00458B2F /* MinHeap.cpp */; };
-		B586605F2002430400084F05 /* Colosseum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5491EDD1FF398E9003FD3CF /* Colosseum.cpp */; };
-		B586606A2002656700084F05 /* library2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B5491EDB1FF39850003FD3CF /* library2.cpp */; };
-		B586606D2002663100084F05 /* FACEBOOK_TEST1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B586606C2002663100084F05 /* FACEBOOK_TEST1.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -248,21 +238,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-<<<<<<< HEAD
 				AFC9213F200242D9000AE8F6 /* unitTestSplayTree.cpp in Sources */,
-=======
-				B586606A2002656700084F05 /* library2.cpp in Sources */,
-				B586605E2002430400084F05 /* MinHeap.cpp in Sources */,
-				B586605F2002430400084F05 /* Colosseum.cpp in Sources */,
->>>>>>> 5988cce6d7109bc02a7184c14aeb56cb79ee18f7
 				B586605A2002403E00084F05 /* SplayTree.cpp in Sources */,
-				B586606D2002663100084F05 /* FACEBOOK_TEST1.cpp in Sources */,
-				B58660562002402E00084F05 /* TrainingHashTable.cpp in Sources */,
-<<<<<<< HEAD
-				B58660582002402E00084F05 /* DynamicArray.cpp in Sources */,
-=======
->>>>>>> 5988cce6d7109bc02a7184c14aeb56cb79ee18f7
-				B58660592002402E00084F05 /* Hash.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
